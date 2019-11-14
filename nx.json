@@ -1,0 +1,30 @@
+{
+  "npmScope": "water-reminder",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "frontend-angular-e2e": {
+      "tags": []
+    },
+    "frontend-angular": {
+      "tags": []
+    },
+    "api": {
+      "tags": []
+    },
+    "api-interfaces": {
+      "tags": []
+    },
+    "frontend-react": {
+      "tags": []
+    },
+    "frontend-react-e2e": {
+      "tags": []
+    }
+  }
+}

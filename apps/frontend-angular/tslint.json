@@ -1,0 +1,7 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [true, "attribute", "waterReminder", "camelCase"],
+    "component-selector": [true, "element", "water-reminder", "kebab-case"]
+  }
+}
