@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@water-reminder/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@water-reminder/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@water-reminder/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

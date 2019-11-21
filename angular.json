@@ -254,7 +254,8 @@
         "serve": {
           "builder": "@nrwl/web:dev-server",
           "options": {
-            "buildTarget": "frontend-react:build"
+            "buildTarget": "frontend-react:build",
+            "proxyConfig": "apps/frontend-react/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -304,6 +305,31 @@
           "options": {
             "tsConfig": ["apps/frontend-react-e2e/tsconfig.e2e.json"],
             "exclude": ["**/node_modules/**", "!apps/frontend-react-e2e/**"]
+          }
+        }
+      }
+    },
+    "utils": {
+      "root": "libs/utils",
+      "sourceRoot": "libs/utils/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/utils/tsconfig.lib.json",
+              "libs/utils/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/utils/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/utils/jest.config.js",
+            "tsConfig": "libs/utils/tsconfig.spec.json"
           }
         }
       }

@@ -25,6 +25,9 @@
     },
     "frontend-react-e2e": {
       "tags": []
+    },
+    "utils": {
+      "tags": []
     }
   }
 }
