@@ -1,6 +1,6 @@
+import { SchemaCollection } from '@api/shared/collections';
 import { UserDto } from '@water-reminder/api-interfaces';
 import { Document, Schema, SchemaDefinition } from 'mongoose';
-import { SchemaCollection } from '../shared/collections';
 
 const userSchemaDefinition: Record<keyof UserDto, SchemaDefinition['']> = {
   email: {

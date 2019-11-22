@@ -1,15 +1,13 @@
-import { Module } from '@nestjs/common';
+import { ConfigService } from '@api/config/config.service';
+import { Global, Module } from '@nestjs/common';
 import * as path from 'path';
-import { ConfigService } from './config.service';
 
+const paths = path.resolve(__dirname);
+console.log(paths);
+
+@Global()
 @Module({
-  providers: [
-    {
-      provide: ConfigService,
-      // TODO: fix weirdly resolved path
-      useValue: new ConfigService(path.resolve(__dirname, '../../../apps/api/development.env')),
-    }
-  ],
+  providers: [ConfigService],
   exports: [ConfigService]
 })
 export class ConfigModule {}

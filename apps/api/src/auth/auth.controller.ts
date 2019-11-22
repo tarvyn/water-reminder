@@ -1,26 +1,17 @@
-import {
-  ConflictException,
-  Controller,
-  Get,
-  Next,
-  Post,
-  Req,
-  Res,
-  UnauthorizedException,
-  UseGuards
-} from '@nestjs/common';
+import { JWT_COOKIE_MAX_AGE, JWTPayload } from '@api/auth/auth.model';
+import { UserService } from '@api/auth/user.service';
+import { ConfigService } from '@api/config/config.service';
+import { environment } from '@api/environments/environment';
+import { verifyJWT } from '@api/utils/verify-jwt';
+import { ConflictException, Controller, Get, Post, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserDto } from '@water-reminder/api-interfaces';
 import { catchPromiseError } from '@water-reminder/utils';
 import { Request, Response } from 'express';
 import { decode } from 'jsonwebtoken';
-import { ConfigService } from '../config/config.service';
-import { verifyJWT } from '../utils/jwt';
-import { UserService } from './user.service';
 
 @Controller('auth')
 export class AuthController {
-
   constructor(
     private config: ConfigService,
     private userService: UserService,
@@ -28,22 +19,19 @@ export class AuthController {
 
   @Get('user')
   async getUser(@Req() req: Request): Promise<UserDto> {
-    // TODO: override cookies type
     const { jwt } = req.cookies;
 
     if (!jwt) {
       throw new UnauthorizedException();
     }
 
-    const [error] = await catchPromiseError(verifyJWT(jwt, this.config.get('jwtSecretKey')));
+    const jwtVerified = await verifyJWT(jwt, this.config.get('jwtSecretKey'));
 
-    if (error) {
+    if (!jwtVerified) {
       throw new UnauthorizedException();
     }
 
-    // TODO: Add types
-    const { id } = decode(jwt) as any;
-
+    const { id } = decode(jwt) as JWTPayload;
     const [getUserError, user] = await catchPromiseError(this.userService.findById(id));
 
     if (getUserError) {
@@ -53,23 +41,26 @@ export class AuthController {
     return user;
   }
 
-  /** Initiate the Google OAuth2 login flow */
+  /**
+   * Initiate the Google OAuth2 login flow
+   */
   @Get('google')
   @UseGuards(AuthGuard('google'))
   googleLogin(): void {}
 
-  /** Handle successful res */
+  /**
+   * Handle successful res
+   */
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   googleLoginCallback(@Req() req: Request, @Res() res: Response): void {
-    // TODO: fix any by correct Response User declaration
-    const jwt: string = (req.user as any).jwt;
+    const jwt: string = req.user.jwt;
 
     if (jwt) {
-      res.cookie('jwt', jwt, { httpOnly: true, maxAge: 1000 * 60 * 60 });
-      res.redirect('https://localhost');
+      res.cookie('jwt', jwt, { httpOnly: true, maxAge: JWT_COOKIE_MAX_AGE });
+      res.redirect(environment.clientHost);
     } else {
-      res.redirect('https://localhost/login/failed');
+      res.redirect(`${environment.clientHost}/login/failed`);
     }
   }
 

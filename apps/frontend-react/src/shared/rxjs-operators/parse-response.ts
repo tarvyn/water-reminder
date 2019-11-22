@@ -9,6 +9,6 @@ export function parseResponse<T>(): UnaryFunction<Observable<Response>, Observab
       }
 
       return throwError({ status: response.status });
-    }),
+    })
   );
 }

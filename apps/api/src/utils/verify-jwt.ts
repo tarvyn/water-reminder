@@ -3,13 +3,13 @@ import { Secret, verify } from 'jsonwebtoken';
 export const verifyJWT = (
   token: string,
   secretKey: Secret
-): Promise<void> => {
-  return new Promise((resolve, reject) => {
+): Promise<boolean> => {
+  return new Promise(resolve => {
     verify(token, secretKey, error => {
       if (error) {
-        return reject(error);
+        return resolve(false);
       }
-      resolve();
+      resolve(true);
     });
   });
 };

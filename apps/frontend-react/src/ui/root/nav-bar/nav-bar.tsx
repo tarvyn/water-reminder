@@ -1,9 +1,9 @@
+import { authActions } from '@react-client/store/auth/actions';
+import { RootState } from '@react-client/store/reducer';
 import React, { Dispatch } from 'react';
 import { Link } from 'react-router-dom';
 import { Action } from 'redux';
-import { logout } from '../../../store/auth/actions';
 import './nav-bar.scss';
-import { RootState } from '../../../store/reducer';
 
 export interface NavBarProps {
   readonly auth: RootState['auth'];
@@ -11,7 +11,7 @@ export interface NavBarProps {
 }
 
 export const NavBar = ({ auth, dispatch }: NavBarProps) => {
-  const onLogout = () => dispatch(logout());
+  const onLogout = () => dispatch(authActions.logout());
 
   return (
     <nav className='app__nav'>

@@ -1,21 +1,16 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- **/
-
+import { AppModule } from '@api/app/app.module';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
 import * as cookieParser from 'cookie-parser';
+import { environment } from '@api/environments/environment';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule, { cors: true });
-  app.use(cookieParser());
   const globalPrefix = 'api';
+  const port = process.env.port || environment.apiPort;
+  const app = await NestFactory.create(AppModule, { cors: true });
+
+  app.use(cookieParser());
   app.setGlobalPrefix(globalPrefix);
-  const port = process.env.port || 3333;
-  await app.listen(port, () => {
-    console.log('Listening at http://localhost:' + port + '/' + globalPrefix);
-  });
+  await app.listen(port);
 }
 
 bootstrap();

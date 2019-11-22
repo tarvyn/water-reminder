@@ -1,3 +1,4 @@
+import { rootPath } from '@api/utils/root-path';
 import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
@@ -12,7 +13,9 @@ type EnvironmentKey =
 export class ConfigService {
   private readonly envConfig: Record<EnvironmentKey, string>;
 
-  constructor(filePath: string) {
+  constructor() {
+    const filePath = `${rootPath}/apps/api/development.env`;
+
     this.envConfig = dotenv.parse(fs.readFileSync(filePath));
   }
 

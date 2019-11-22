@@ -1,34 +1,33 @@
-import { GET_USER_ERROR, GET_USER_SUCCESS, LOGOUT, LOGOUT_ERROR, LOGOUT_SUCCESS } from './actions';
+import { Actions, ActionType } from './actions';
 import { initialState, State } from './state';
 
-export default function reducer(
+export function reducer(
   state: State = initialState,
-  action: { readonly type: string; readonly payload: unknown }
+  action: Actions
 ): State {
   switch (action.type) {
-    case LOGOUT:
+    case ActionType.Logout:
       return {
         ...state,
         loggedIn: false
       };
-    case LOGOUT_SUCCESS:
+    case ActionType.LogoutSuccess:
       return {
         ...state,
         loggedIn: false
       };
-    case LOGOUT_ERROR:
+    case ActionType.LogoutError:
       return {
         ...state,
         loggedIn: true
       };
-    case GET_USER_SUCCESS:
+    case ActionType.GetUserSuccess:
       return {
         ...state,
         loggedIn: true,
-        // TODO: fix
-        user: (action.payload as any).user
+        user: action.payload.user
       };
-    case GET_USER_ERROR:
+    case ActionType.GetUserError:
       return {
         ...state,
         loggedIn: false,

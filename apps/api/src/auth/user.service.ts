@@ -1,12 +1,12 @@
+import { SocialProvider } from '@api/auth/auth.model';
+import { UserDocument } from '@api/auth/user.schema';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserDto } from '@water-reminder/api-interfaces';
 import { catchPromiseError } from '@water-reminder/utils';
 import { Model } from 'mongoose';
 import { Profile } from 'passport-google-oauth20';
-import { SchemaCollection } from '../shared/collections';
-import { Provider } from './auth.service';
-import { UserDocument } from './user.schema';
+import { SchemaCollection } from '@api/shared/collections';
 
 @Injectable()
 export class UserService {
@@ -19,7 +19,7 @@ export class UserService {
     return this.userModel.findById(id);
   }
 
-  async findOrCreate(profile: Profile, provider: Provider): Promise<UserDocument> {
+  async findOrCreate(profile: Profile, provider: SocialProvider): Promise<UserDocument> {
     const { id: thirdPartyId, photos, name: { familyName, givenName }, emails: [{ value: email }] } = profile;
     const [photo] = photos || [];
     const user: UserDto = {

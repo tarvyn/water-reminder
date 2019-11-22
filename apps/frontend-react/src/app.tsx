@@ -1,14 +1,13 @@
+import { authActions } from '@react-client/store/auth/actions';
+import { messageActions } from '@react-client/store/message/actions';
+import { RootState } from '@react-client/store/reducer';
+import Login from '@react-client/ui/login/login';
+import NavBar from '@react-client/ui/root/nav-bar/nav-bar';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
 import './app.scss';
-import { getUser } from './store/auth/actions';
-import { getMessage } from './store/message/actions';
-import { RootState } from './store/reducer';
-import Login from './ui/login/login';
-import NavBar from './ui/root/nav-bar/nav-bar';
 
-// TODO: add import aliases
 export const App = () => {
   const message = useSelector((state: RootState) => state.message.message);
   const auth = useSelector((state: RootState) => state.auth);
@@ -16,8 +15,8 @@ export const App = () => {
 
   useEffect(
     () => {
-      dispatch(getMessage());
-      dispatch(getUser());
+      dispatch(messageActions.getMessage());
+      dispatch(authActions.getUser());
     },
     []
   );

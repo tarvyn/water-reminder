@@ -1,7 +1,7 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { AppService } from '@api/app/app.service';
+import { Controller, Get, Req } from '@nestjs/common';
 import { Message } from '@water-reminder/api-interfaces';
 import { Request } from 'express';
-import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
@@ -9,8 +9,6 @@ export class AppController {
 
   @Get('hello')
   getData(@Req() req: Request): Message {
-    console.log('cookies', JSON.stringify(req.cookies));
-
     return this.appService.getData();
   }
 }

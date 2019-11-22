@@ -1,3 +1,6 @@
 export const environment = {
-  production: false
+  production: false,
+  clientHost: 'https://localhost',
+  apiHost: 'http://localhost',
+  apiPort: 3333,
 };

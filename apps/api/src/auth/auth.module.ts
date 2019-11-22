@@ -1,11 +1,11 @@
+import { AuthController } from '@api/auth/auth.controller';
+import { AuthService } from '@api/auth/auth.service';
+import { GoogleStrategy } from '@api/auth/google.strategy';
+import { UserSchemaModel } from '@api/auth/user.schema';
+import { UserService } from '@api/auth/user.service';
+import { ConfigModule } from '@api/config/config.module';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule } from '../config/config.module';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { GoogleStrategy } from './google.strategy';
-import { UserSchemaModel } from './user.schema';
-import { UserService } from './user.service';
 
 @Module({
   imports: [

@@ -1,7 +1,7 @@
+import { authStore } from '@react-client/store/auth';
+import { messageStore } from '@react-client/store/message';
 import { combineReducers } from 'redux';
-import authReducer from './auth/reducer';
 import { State as AuthState } from './auth/state';
-import messageReducer from './message/reducer';
 import { State as MessageState } from './message/state';
 
 export interface RootState {
@@ -9,9 +9,7 @@ export interface RootState {
   readonly auth: AuthState;
 }
 
-const rootReducer = combineReducers<RootState>({
-  message: messageReducer,
-  auth: authReducer
+export const rootReducer = combineReducers<RootState>({
+  message: messageStore.reducer,
+  auth: authStore.reducer
 });
-
-export default rootReducer;

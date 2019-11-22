@@ -1,12 +1,15 @@
+import { GoogleAuthUserPayload, SocialProvider } from '@api/auth/auth.model';
+import { AuthService } from '@api/auth/auth.service';
+import { ConfigService } from '@api/config/config.service';
+import { environment } from '@api/environments/environment';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, Profile } from 'passport-google-oauth20';
-import { ConfigService } from '../config/config.service';
-import { AuthService, Provider } from './auth.service';
+import { catchPromiseError } from '@water-reminder/utils';
+import { Request } from 'express';
+import { Profile, Strategy } from 'passport-google-oauth20';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-
   constructor(
     private authService: AuthService,
     private config: ConfigService,
@@ -14,33 +17,26 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: config.get('googleClientId'),
       clientSecret: config.get('googleClientSecret'),
-      callbackURL: 'http://localhost:3333/api/auth/google/callback',
+      callbackURL: `${environment.apiHost}:${environment.apiPort}/api/auth/google/callback`,
       passReqToCallback: true,
       scope: ['profile', 'email']
     });
   }
 
   async validate(
-    request: any,
+    request: Request,
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-    done: Function
-  ) {
-    try {
-      console.log(profile);
+    done: (error: Error, result: GoogleAuthUserPayload) => void
+  ): Promise<void> {
+    const [error, jwt] = await catchPromiseError(
+      this.authService.validateOAuthLogin(profile, SocialProvider.google)
+    );
 
-      const jwt = await this.authService.validateOAuthLogin(
-        profile,
-        Provider.google
-      );
-      const user = { jwt };
-
-      done(null, user);
-    } catch (err) {
-      console.log(err);
-      done(err, false);
+    if (error) {
+      return done(error, null);
     }
+    done(null, { jwt });
   }
-
 }

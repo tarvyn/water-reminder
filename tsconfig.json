@@ -17,7 +17,17 @@
     "baseUrl": ".",
     "paths": {
       "@water-reminder/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@water-reminder/utils": ["libs/utils/src/index.ts"]
+      "@water-reminder/utils": ["libs/utils/src/index.ts"],
+      "@api/app/*": ["apps/api/src/app/*"],
+      "@api/auth/*": ["apps/api/src/auth/*"],
+      "@api/config/*": ["apps/api/src/config/*"],
+      "@api/shared/*": ["apps/api/src/shared/*"],
+      "@api/utils/*": ["apps/api/src/utils/*"],
+      "@api/environments/*": ["apps/api/src/environments/*"],
+      "@react-client/shared/*": ["apps/frontend-react/src/shared/*"],
+      "@react-client/store/*": ["apps/frontend-react/src/store/*"],
+      "@react-client/ui/*": ["apps/frontend-react/src/ui/*"],
+      "@react-client/environments/*": ["apps/frontend-react/src/environments/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

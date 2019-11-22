@@ -1,20 +1,20 @@
-import { GET_MESSAGE, GET_MESSAGE_SUCCESS } from './actions';
+import { Actions, ActionType } from '@react-client/store/message/actions';
 import { initialState, State } from './state';
 
-export default function reducer(
+export function reducer(
   state: State = initialState,
-  action: { readonly type: string; readonly payload: unknown }
+  action: Actions
 ): State {
   switch (action.type) {
-    case GET_MESSAGE:
+    case ActionType.GetMessage:
       return {
         ...state,
         isLoading: true
       };
-    case GET_MESSAGE_SUCCESS:
+    case ActionType.GetMessageSuccess:
       return {
         ...state,
-        message: action.payload as string
+        message: action.payload.message.message
       };
     default:
       return state;
