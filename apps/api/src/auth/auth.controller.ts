@@ -58,9 +58,9 @@ export class AuthController {
 
     if (jwt) {
       res.cookie('jwt', jwt, { httpOnly: true, maxAge: JWT_COOKIE_MAX_AGE });
-      res.redirect(environment.clientHost);
+      res.redirect(`${environment.clientHost}:${environment.clientPort}`);
     } else {
-      res.redirect(`${environment.clientHost}/login/failed`);
+      res.redirect(`${environment.clientHost}:${environment.clientPort}/login/failed`);
     }
   }
 

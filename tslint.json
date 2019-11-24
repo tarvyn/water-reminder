@@ -128,6 +128,7 @@
     "trailing-comma": false,
     "object-curly-spacing": true,
     "no-magic-numbers": true,
-    "whitespace": false
+    "whitespace": false,
+    "object-literal-key-quotes": false
   }
 }
