@@ -1,3 +1,4 @@
 export enum SchemaCollection {
-  User = 'User'
+  User = 'User',
+  Dose = 'Dose',
 }

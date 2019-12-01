@@ -1,22 +1,26 @@
-import { JWTPayload, SocialProvider } from '@api/auth/auth.model';
-import { UserService } from '@api/auth/user.service';
+import { JWT_COOKIE_MAX_AGE, JWT_COOKIE_NAME, JWTPayload } from '@api/auth/auth.model';
 import { ConfigService } from '@api/config/config.service';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
-import { Profile } from 'passport-google-oauth20';
 
 @Injectable()
 export class AuthService {
   constructor(
     private config: ConfigService,
-    private userService: UserService,
   ) {}
 
-  async validateOAuthLogin(profile: Profile, provider: SocialProvider): Promise<string> {
-    const { id: thirdPartyId } = profile;
-    const { id } = await this.userService.findOrCreate(profile, provider);
-    const payload: JWTPayload = { id, provider, thirdPartyId };
+  async setAuthorizationCookie(response: Response, payload: JWTPayload): Promise<void> {
+    const jwt = await this.generateJWT(payload);
 
+    response.cookie(JWT_COOKIE_NAME, jwt, { httpOnly: true, maxAge: JWT_COOKIE_MAX_AGE });
+  }
+
+  clearAuthorizationCookie(response: Response): void {
+    response.clearCookie(JWT_COOKIE_NAME);
+  }
+
+  private generateJWT(payload: JWTPayload): string {
     try {
       return sign(payload, this.config.get('jwtSecretKey'));
     } catch (err) {

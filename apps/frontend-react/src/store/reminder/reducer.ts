@@ -1,4 +1,4 @@
-import { Actions, ActionType } from '@react-client/store/message/actions';
+import { Actions, ActionType } from '@react-client/store/reminder/actions';
 import { initialState, State } from './state';
 
 export function reducer(
@@ -6,15 +6,15 @@ export function reducer(
   action: Actions
 ): State {
   switch (action.type) {
-    case ActionType.GetMessage:
+    case ActionType.GetDoses:
       return {
         ...state,
         isLoading: true
       };
-    case ActionType.GetMessageSuccess:
+    case ActionType.GetDosesSuccess:
       return {
         ...state,
-        message: action.payload.message.message
+        doses: action.payload.doses
       };
     default:
       return state;

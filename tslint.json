@@ -47,7 +47,6 @@
     "rxjs-no-internal": true,
     "rxjs-no-unsafe-takeuntil": true,
     "readonly-keyword": [true, "ignore-class", "ignore-local"],
-    "no-let": [true, "ignore-local"],
     "no-array-mutation": true,
     "no-delete": true,
     "arrow-return-shorthand": true,
@@ -127,7 +126,6 @@
     "member-access": false,
     "trailing-comma": false,
     "object-curly-spacing": true,
-    "no-magic-numbers": true,
     "whitespace": false,
     "object-literal-key-quotes": false
   }

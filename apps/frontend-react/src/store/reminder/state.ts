@@ -1,9 +1,11 @@
+import { DoseDto } from '@water-reminder/api-interfaces';
+
 export interface State {
-  readonly message: string;
+  readonly doses: Array<DoseDto>;
   readonly isLoading: boolean;
 }
 
 export const initialState: State = {
-  message: undefined,
+  doses: undefined,
   isLoading: true
 };

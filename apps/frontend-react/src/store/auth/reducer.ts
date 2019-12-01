@@ -6,6 +6,39 @@ export function reducer(
   action: Actions
 ): State {
   switch (action.type) {
+    case ActionType.SignUp:
+      return {
+        ...state,
+        signUpErrorMessage: undefined
+      };
+    case ActionType.SignUpSuccess:
+      return {
+        ...state,
+        loggedIn: true,
+        user: action.payload.user
+      };
+    case ActionType.SignUpError:
+      return {
+        ...state,
+        signUpErrorMessage: action.payload.errorMessage
+      };
+    case ActionType.Login:
+      return {
+        ...state,
+        loginInErrorMessage: undefined
+      };
+    case ActionType.LoginSuccess:
+      return {
+        ...state,
+        loggedIn: true,
+        user: action.payload.user
+      };
+    case ActionType.LoginError:
+      return {
+        ...state,
+        loggedIn: false,
+        loginInErrorMessage: action.payload.errorMessage
+      };
     case ActionType.Logout:
       return {
         ...state,

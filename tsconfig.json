@@ -24,6 +24,7 @@
       "@api/shared/*": ["apps/api/src/shared/*"],
       "@api/utils/*": ["apps/api/src/utils/*"],
       "@api/environments/*": ["apps/api/src/environments/*"],
+      "@react-client/api-connectors/*": ["apps/frontend-react/src/api-connectors/*"],
       "@react-client/shared/*": ["apps/frontend-react/src/shared/*"],
       "@react-client/store/*": ["apps/frontend-react/src/store/*"],
       "@react-client/ui/*": ["apps/frontend-react/src/ui/*"],

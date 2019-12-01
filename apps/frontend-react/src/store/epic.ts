@@ -1,8 +1,8 @@
 import { authStore } from '@react-client/store/auth';
-import { messageStore } from '@react-client/store/message';
+import { reminderStore } from '@react-client/store/reminder';
 import { combineEpics } from 'redux-observable';
 
 export const rootEpic = combineEpics(
   authStore.epics,
-  messageStore.epics
+  reminderStore.epics
 );

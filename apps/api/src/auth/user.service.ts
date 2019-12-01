@@ -1,12 +1,13 @@
-import { SocialProvider } from '@api/auth/auth.model';
+import { PASSWORD_HASH_COMPLEXITY, SocialProvider } from '@api/auth/auth.model';
 import { UserDocument } from '@api/auth/user.schema';
+import { SchemaCollection } from '@api/shared/collections';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { UserDto } from '@water-reminder/api-interfaces';
+import { OmitId, UserDto, UserSignUpDto } from '@water-reminder/api-interfaces';
 import { catchPromiseError } from '@water-reminder/utils';
+import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
 import { Profile } from 'passport-google-oauth20';
-import { SchemaCollection } from '@api/shared/collections';
 
 @Injectable()
 export class UserService {
@@ -19,10 +20,29 @@ export class UserService {
     return this.userModel.findById(id);
   }
 
+  async findByEmail(email: UserDto['email']): Promise<UserDto> {
+    return this.userModel.findOne({ email });
+  }
+
+  async create(userSignUpData: UserSignUpDto): Promise<UserDto> {
+    const hashedPassword = await hash(userSignUpData.password, PASSWORD_HASH_COMPLEXITY);
+    const [createUserError, [user]] =
+      await catchPromiseError(this.userModel.create([{
+        ...userSignUpData,
+        password: hashedPassword
+      }]));
+
+    if (createUserError) {
+      throw createUserError;
+    }
+
+    return user;
+  }
+
   async findOrCreate(profile: Profile, provider: SocialProvider): Promise<UserDocument> {
     const { id: thirdPartyId, photos, name: { familyName, givenName }, emails: [{ value: email }] } = profile;
     const [photo] = photos || [];
-    const user: UserDto = {
+    const user: OmitId<UserDto> = {
       email,
       provider,
       thirdPartyId,

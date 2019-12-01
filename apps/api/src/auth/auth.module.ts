@@ -18,7 +18,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   providers: [
     GoogleStrategy,
     AuthService,
-    UserService
+    UserService,
   ]
 })
 export class AuthModule {}

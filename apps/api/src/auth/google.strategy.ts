@@ -1,5 +1,6 @@
 import { GoogleAuthUserPayload, SocialProvider } from '@api/auth/auth.model';
 import { AuthService } from '@api/auth/auth.service';
+import { UserService } from '@api/auth/user.service';
 import { ConfigService } from '@api/config/config.service';
 import { environment } from '@api/environments/environment';
 import { Injectable } from '@nestjs/common';
@@ -12,12 +13,13 @@ import { Profile, Strategy } from 'passport-google-oauth20';
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private config: ConfigService,
   ) {
     super({
       clientID: config.get('googleClientId'),
       clientSecret: config.get('googleClientSecret'),
-      callbackURL: `${environment.apiHost}:${environment.apiPort}/api/auth/google/callback`,
+      callbackURL: `${environment.apiHost}:${environment.apiPort}/api/auth/login/google/callback`,
       passReqToCallback: true,
       scope: ['profile', 'email']
     });
@@ -30,13 +32,14 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: Profile,
     done: (error: Error, result: GoogleAuthUserPayload) => void
   ): Promise<void> {
-    const [error, jwt] = await catchPromiseError(
-      this.authService.validateOAuthLogin(profile, SocialProvider.google)
+    const [error, user] = await catchPromiseError(
+      this.userService.findOrCreate(profile, SocialProvider.google)
     );
 
     if (error) {
       return done(error, null);
     }
-    done(null, { jwt });
+
+    done(null, { id: user.id });
   }
 }

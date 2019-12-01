@@ -1,4 +1,6 @@
 import { InferValueTypes } from '@react-client/shared/types/utilities';
+import { SignInFormData } from '@react-client/ui/auth/sign-in/sign-in-form/sign-in-form';
+import { SignUpFormData } from '@react-client/ui/auth/sign-up/sign-up-form/sign-up-form';
 import { UserDto } from '@water-reminder/api-interfaces';
 
 export enum ActionType {
@@ -8,15 +10,37 @@ export enum ActionType {
   Logout = '[auth] Logout',
   LogoutSuccess = '[auth] Logout success',
   LogoutError = '[auth] Logout error',
+  SignUp = '[auth] Sign up',
+  SignUpSuccess = '[auth] Sign up success',
+  SignUpError = '[auth] Sign up error',
   GetUser = '[auth] Get user',
   GetUserSuccess = '[auth] Get user success',
   GetUserError = '[auth] Get user error',
 }
 
 export const authActions = {
-  login: () => {
+  signUp: (signUpData: SignUpFormData) => {
+    return {
+      type: ActionType.SignUp,
+      payload: { signUpData }
+    } as const;
+  },
+  signUpSuccess: (user: UserDto) => {
+    return {
+      type: ActionType.SignUpSuccess,
+      payload: { user }
+    } as const;
+  },
+  signUpError: (errorMessage: string) => {
+    return {
+      type: ActionType.SignUpError,
+      payload: { errorMessage }
+    } as const;
+  },
+  login: (loginData: SignInFormData) => {
     return {
       type: ActionType.Login,
+      payload: { loginData }
     } as const;
   },
   loginSuccess: (user: UserDto) => {

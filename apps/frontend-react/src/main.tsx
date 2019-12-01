@@ -5,7 +5,8 @@ import configureStore from '@react-client/store/store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import history from '@react-client/shared/models/history';
 import App from './app';
 
 const store = configureStore();
@@ -20,13 +21,13 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={history}>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <App/>
       </ThemeProvider>
     </Provider>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );

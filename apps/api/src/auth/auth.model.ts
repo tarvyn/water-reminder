@@ -4,12 +4,12 @@ export enum SocialProvider {
 
 export interface JWTPayload {
   readonly id: string;
-  readonly provider: SocialProvider;
-  readonly thirdPartyId: string;
 }
 
 export interface GoogleAuthUserPayload {
-  readonly jwt: string;
+  readonly id: string;
 }
 
+export const JWT_COOKIE_NAME = 'jwt';
 export const JWT_COOKIE_MAX_AGE = 36000000;
+export const PASSWORD_HASH_COMPLEXITY = 12;
