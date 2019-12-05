@@ -2,7 +2,6 @@ import { GoogleAuthUserPayload, SocialProvider } from '@api/auth/auth.model';
 import { AuthService } from '@api/auth/auth.service';
 import { UserService } from '@api/auth/user.service';
 import { ConfigService } from '@api/config/config.service';
-import { environment } from '@api/environments/environment';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { catchPromiseError } from '@water-reminder/utils';
@@ -19,7 +18,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: config.get('googleClientId'),
       clientSecret: config.get('googleClientSecret'),
-      callbackURL: `${environment.apiHost}:${environment.apiPort}/api/auth/login/google/callback`,
+      callbackURL: `${config.get('clientHost')}/api/auth/login/google/callback`,
       passReqToCallback: true,
       scope: ['profile', 'email']
     });

@@ -6,7 +6,7 @@ import { environment } from '@api/environments/environment';
 
 async function bootstrap(): Promise<void> {
   const globalPrefix = 'api';
-  const port = process.env.port || environment.apiPort;
+  const port = process.env.PORT || environment.apiPort;
   const app = await NestFactory.create(AppModule, { cors: true });
 
   app.use(cookieParser());

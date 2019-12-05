@@ -1,3 +1,4 @@
+import { environment } from '@api/environments/environment';
 import { rootPath } from '@api/utils/root-path';
 import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
@@ -7,7 +8,11 @@ type EnvironmentKey =
   'jwtSecretKey'
   | 'googleClientId'
   | 'googleClientSecret'
-  | 'mongodbConnectionString';
+  | 'mongodbConnectionString'
+  | 'clientHost'
+  | 'clientPort'
+  | 'apiHost'
+  | 'PORT';
 
 @Injectable()
 export class ConfigService {
@@ -16,7 +21,9 @@ export class ConfigService {
   constructor() {
     const filePath = `${rootPath}/apps/api/development.env`;
 
-    this.envConfig = dotenv.parse(fs.readFileSync(filePath));
+    this.envConfig = environment.production
+      ? process.env as Record<EnvironmentKey, string>
+      : dotenv.parse(fs.readFileSync(filePath)) as Record<EnvironmentKey, string>;
   }
 
   get(key: EnvironmentKey): string {

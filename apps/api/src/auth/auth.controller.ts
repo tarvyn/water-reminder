@@ -4,7 +4,6 @@ import { JWTPayload } from '@api/auth/auth.model';
 import { AuthService } from '@api/auth/auth.service';
 import { UserService } from '@api/auth/user.service';
 import { ConfigService } from '@api/config/config.service';
-import { environment } from '@api/environments/environment';
 import {
   BadRequestException,
   Body,
@@ -126,9 +125,9 @@ export class AuthController {
   ): Promise<void> {
     if (id) {
       await this.authService.setAuthorizationCookie(response, { id });
-      response.redirect(`${environment.clientHost}:${environment.clientPort}`);
+      response.redirect(`${this.config.get('clientHost')}`);
     } else {
-      response.redirect(`${environment.clientHost}:${environment.clientPort}/login/failed`);
+      response.redirect(`${this.config.get('clientHost')}/login/failed`);
     }
   }
 
