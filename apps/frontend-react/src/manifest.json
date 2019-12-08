@@ -1,9 +1,9 @@
 {
-  "name": "WaterReminder",
-  "short_name": "WaterReminder",
-  "background_color": "#282c34",
-  "theme_color": "#282c34",
-  "description": "A picture of your favorite pupperino",
+  "name": "Water Reminder",
+  "short_name": "Water Reminder",
+  "background_color": "#3f51b5",
+  "theme_color": "#3f51b5",
+  "description": "Water Reminder App",
   "icons": [{
     "src": "assets/images/icon-192x192.png",
     "sizes": "192x192",
@@ -13,6 +13,6 @@
     "sizes": "512x512",
     "type": "image/png"
   }],
-  "start_url": "/?source=pwa",
+  "start_url": "/",
   "display": "standalone"
 }
