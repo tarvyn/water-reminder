@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import history from '@react-client/shared/models/history';
 import App from './app';
+import { registerServiceWorker } from './register-service-worker';
 
 const store = configureStore();
 const theme = createMuiTheme({
@@ -31,3 +32,5 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 );
+
+registerServiceWorker();
