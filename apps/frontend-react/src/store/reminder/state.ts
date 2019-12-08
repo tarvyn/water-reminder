@@ -1,7 +1,7 @@
-import { DoseDto } from '@water-reminder/api-interfaces';
+import { DoseViewModel } from '@react-client/shared/types/reminder';
 
 export interface State {
-  readonly doses: Array<DoseDto>;
+  readonly doses: Array<DoseViewModel>;
   readonly isLoading: boolean;
 }
 

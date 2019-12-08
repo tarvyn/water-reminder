@@ -1,11 +1,12 @@
+import { Action } from '@react-client/shared/types/redux';
 import { authStore } from '@react-client/store/auth';
 import { ActionType } from '@react-client/store/auth/actions';
 import { reminderStore } from '@react-client/store/reminder';
 import { Reducer } from 'react';
-import { combineReducers, Action } from 'redux';
+import { combineReducers } from 'redux';
+import { FormStateMap, reducer as formReducer } from 'redux-form';
 import { State as AuthState } from './auth/state';
 import { State as ReminderState } from './reminder/state';
-import { reducer as formReducer, FormStateMap } from 'redux-form';
 
 export interface RootState {
   readonly reminder: ReminderState;
@@ -30,5 +31,16 @@ export const rootReducer: Reducer<RootState, Action> = (state, action) => {
     return appReducer(rootInitialState, action);
   }
 
-  return appReducer(state, action);
+  const userId = state
+    && state.auth
+    && state.auth.user
+    && state.auth.user._id;
+
+  return appReducer(state, {
+    ...action,
+    payload: {
+      ...(action.payload || {}),
+      userId
+    }
+  });
 };

@@ -1,5 +1,6 @@
-import { InferValueTypes } from '@react-client/shared/types/utilities';
-import { DoseDto, DoseVolume } from '@water-reminder/api-interfaces';
+import { ExtractActionsType } from '@react-client/shared/types/redux';
+import { DoseViewModel } from '@react-client/shared/types/reminder';
+import { DoseDto } from '@water-reminder/api-interfaces';
 
 export enum ActionType {
   GetDoses = '[reminder] get doses',
@@ -19,7 +20,7 @@ export const reminderActions = {
       type: ActionType.GetDoses,
     } as const;
   },
-  getDosesSuccess: (doses: Array<DoseDto>) => {
+  getDosesSuccess: (doses: Array<DoseViewModel>) => {
     return {
       type: ActionType.GetDosesSuccess,
       payload: { doses }
@@ -31,10 +32,10 @@ export const reminderActions = {
       payload: { errorMessage }
     } as const;
   },
-  createDose: () => {
+  createDose: (payload: Pick<DoseViewModel, 'volume' | 'time'>) => {
     return {
       type: ActionType.CreateDose,
-      payload: { volume: DoseVolume.cup }
+      payload
     } as const;
   },
   createDoseSuccess: (dose: DoseDto) => {
@@ -69,4 +70,4 @@ export const reminderActions = {
   },
 };
 
-export type Actions = ReturnType<InferValueTypes<typeof reminderActions>>;
+export type Actions = ExtractActionsType<typeof reminderActions>;

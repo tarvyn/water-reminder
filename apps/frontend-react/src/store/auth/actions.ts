@@ -1,4 +1,4 @@
-import { InferValueTypes } from '@react-client/shared/types/utilities';
+import { ExtractActionsType } from '@react-client/shared/types/redux';
 import { SignInFormData } from '@react-client/ui/auth/sign-in/sign-in-form/sign-in-form';
 import { SignUpFormData } from '@react-client/ui/auth/sign-up/sign-up-form/sign-up-form';
 import { UserDto } from '@water-reminder/api-interfaces';
@@ -90,4 +90,4 @@ export const authActions = {
   },
 };
 
-export type Actions = ReturnType<InferValueTypes<typeof authActions>>;
+export type Actions = ExtractActionsType<typeof authActions>;

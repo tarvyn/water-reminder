@@ -2,6 +2,7 @@ import { Container, createStyles, Fab, makeStyles, Paper, Theme, Typography } fr
 import { Add, Delete, LocalDrink } from '@material-ui/icons';
 import { RootState } from '@react-client/store/reducer';
 import { reminderActions } from '@react-client/store/reminder/actions';
+import { DoseVolume } from '@water-reminder/api-interfaces';
 import { format } from 'date-fns';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,7 +35,10 @@ const Doses = () => {
   const dispatch = useDispatch();
   const doses = useSelector((state: RootState) => state.reminder.doses);
   const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
-  const createDose = () => dispatch(reminderActions.createDose());
+  const createDose = () => dispatch(reminderActions.createDose({
+    time: new Date(),
+    volume: DoseVolume.cup
+  }));
   const deleteDose = (id: string) => dispatch(reminderActions.deleteDose(id));
 
   useEffect(

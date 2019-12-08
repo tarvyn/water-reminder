@@ -14,10 +14,11 @@ import {
   Req,
   UseGuards
 } from '@nestjs/common';
-import { DoseDto, DoseTimeRange, DoseVolume } from '@water-reminder/api-interfaces';
+import { DoseDto, DoseTimeRange } from '@water-reminder/api-interfaces';
 import { catchPromiseError } from '@water-reminder/utils';
 import { Request } from 'express';
 import { decode } from 'jsonwebtoken';
+import { CreateDoseData } from './dose.model';
 import { ReminderService } from './reminder.service';
 
 @Controller('reminder')
@@ -49,12 +50,12 @@ export class ReminderController {
   @Post('doses')
   async createDose(
     @Req() req: Request,
-    @Body('volume') volume: DoseVolume
+    @Body() { volume, time }: CreateDoseData
   ): Promise<DoseDto> {
     const { jwt } = req.cookies;
     const { id } = decode(jwt) as JWTPayload;
     const [createDoseError, dose] = await catchPromiseError(
-      this.reminderService.createDose({ userId: id, volume })
+      this.reminderService.createDose({ userId: id, volume, time })
     );
 
     if (createDoseError) {

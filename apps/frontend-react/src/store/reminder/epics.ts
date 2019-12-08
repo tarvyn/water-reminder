@@ -10,23 +10,29 @@ const ofType = exposeOfTypeOperator<Actions>();
 export const getDosesEpic: Epic<Actions> = action$ => action$.pipe(
   ofType(ActionType.GetDoses),
   switchMap(() => reminderApiConnector.getDoses().pipe(
-    map(doses => reminderActions.getDosesSuccess(doses)),
+    map(doses => reminderActions.getDosesSuccess(
+      doses.map(dose => ({
+        ...dose,
+        time: new Date(dose.time)
+      }))
+    )),
     catchError(error => of(reminderActions.getDosesError(error.toString())))
   ))
 );
 
 export const createDoseEpic: Epic<Actions> = action$ => action$.pipe(
   ofType(ActionType.CreateDose),
-  mergeMap(({ payload: { volume } }) => reminderApiConnector.createDose(volume).pipe(
-    map(() => reminderActions.getDoses()),
-    catchError(error => of(reminderActions.createDoseError(error.toString())))
-  ))
+  mergeMap(({ payload: { time, volume } }) => reminderApiConnector
+    .createDose({ time: time.toISOString(), volume }).pipe(
+      map(dose => reminderActions.createDoseSuccess(dose)),
+      catchError(error => of(reminderActions.createDoseError(error.toString())))
+    ))
 );
 
 export const deleteDoseEpic: Epic<Actions> = action$ => action$.pipe(
   ofType(ActionType.DeleteDose),
   mergeMap(({ payload: { id } }) => reminderApiConnector.deleteDose(id).pipe(
-    map(() => reminderActions.getDoses()),
+    map(() => reminderActions.deleteDoseSuccess(id)),
     catchError(error => of(reminderActions.deleteDoseError(error.toString())))
   ))
 );

@@ -1,3 +1,5 @@
+import { CreateDose } from '../../../../apps/api/src/reminder/dose.model';
+
 export type OmitId<T extends BaseEntity> = Omit<T, '_id'>;
 
 export interface BaseEntity {
@@ -23,6 +25,8 @@ export interface DoseDto extends BaseEntity {
   readonly volume: DoseVolume;
   readonly userId: string;
 }
+
+export type CreateDoseDto = Omit<CreateDose, '_id' | 'userId'>;
 
 export interface ErrorResponse {
   readonly statusCode: number;

@@ -1,6 +1,6 @@
 import { API_PREFIX } from '@react-client/shared/constants/api-prefix';
 import { parseResponse } from '@react-client/shared/rxjs-operators/parse-response';
-import { DoseDto, DoseTimeRange, DoseVolume } from '@water-reminder/api-interfaces';
+import { CreateDoseDto, DoseDto, DoseTimeRange, DoseVolume } from '@water-reminder/api-interfaces';
 import { Observable } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { first, map } from 'rxjs/operators';
@@ -17,10 +17,10 @@ class ReminderApiConnector {
     );
   }
 
-  createDose(volume: DoseVolume): Observable<DoseDto> {
+  createDose(createDoseData: CreateDoseDto): Observable<DoseDto> {
     return fromFetch('/api/reminder/doses', {
       method: 'POST',
-      body: JSON.stringify({ volume }),
+      body: JSON.stringify(createDoseData),
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
       parseResponse<DoseDto>(),

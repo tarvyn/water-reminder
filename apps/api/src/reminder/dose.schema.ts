@@ -2,11 +2,13 @@ import { SchemaCollection } from '@api/shared/collections';
 import { DoseDto } from '@water-reminder/api-interfaces';
 import { Document, Schema, SchemaDefinition, SchemaTypes } from 'mongoose';
 
-const createdAtBindingProperty: keyof DoseDto = 'time';
-
-type DoseSchemaDefinitionKeys = keyof Omit<DoseDto, typeof createdAtBindingProperty | '_id'>;
+type DoseSchemaDefinitionKeys = keyof Omit<DoseDto, '_id'>;
 
 const doseSchemaDefinition: Record<DoseSchemaDefinitionKeys, SchemaDefinition['']> = {
+  time: {
+    type: SchemaTypes.Date,
+    required: true
+  },
   volume: {
     type: SchemaTypes.Number,
     required: true
@@ -20,7 +22,6 @@ const doseSchemaDefinition: Record<DoseSchemaDefinitionKeys, SchemaDefinition[''
 export type DoseDocument = Readonly<Document> & DoseDto;
 
 export const DoseSchema = new Schema(doseSchemaDefinition, {
-  timestamps: { createdAt: createdAtBindingProperty },
   versionKey: false
 });
 
