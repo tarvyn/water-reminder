@@ -7,3 +7,12 @@ workbox.setConfig({
 workbox.core.skipWaiting();
 workbox.core.clientsClaim();
 workbox.precaching.precacheAndRoute([]);
+
+
+self.addEventListener('push', (event) => {
+  const title = event.data.text();
+
+  event.waitUntil(
+    self.registration.showNotification(title)
+  );
+});

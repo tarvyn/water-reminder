@@ -40,3 +40,8 @@ export enum DoseTimeRange {
 export enum DoseVolume {
   cup = 200
 }
+
+/**
+ * Public VAPID key for push notifications.
+ */
+export const vapidPublicKey = 'BO0o6h3SswzEA4tJ5VOn_GJQPy16gHmq5pRfawdpslYLd967NEpKhfnw65uQvo0rOoKGupkd2C86CEemNORY4WI';

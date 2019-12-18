@@ -79,6 +79,10 @@ const BaseSignInForm = ({ handleSubmit, errorMessage, pristine, invalid }: SignI
 
 const SignInForm = reduxForm<SignInFormData, NativeSignInFormProps>({
   form: 'sign-in',
+  initialValues: {
+    password: null,
+    email: null
+  },
   validate
 })(BaseSignInForm);
 

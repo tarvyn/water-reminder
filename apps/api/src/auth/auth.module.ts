@@ -4,12 +4,14 @@ import { GoogleStrategy } from '@api/auth/google.strategy';
 import { UserSchemaModel } from '@api/auth/user.schema';
 import { UserService } from '@api/auth/user.service';
 import { ConfigModule } from '@api/config/config.module';
+import { SharedModule } from '@api/shared/shared.module';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     ConfigModule,
+    SharedModule,
     MongooseModule.forFeature([UserSchemaModel])
   ],
   controllers: [

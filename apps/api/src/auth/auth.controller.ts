@@ -1,16 +1,17 @@
-import { UserSignInData, UserSignUpData } from '@api/auth/auth-user.model';
+import { PushSubscriptionData, UserSignInData, UserSignUpData } from '@api/auth/auth-user.model';
 import { AuthGuard } from '@api/auth/auth.guard';
 import { JWTPayload } from '@api/auth/auth.model';
 import { AuthService } from '@api/auth/auth.service';
 import { UserService } from '@api/auth/user.service';
 import { ConfigService } from '@api/config/config.service';
+import { WebPushService } from '@api/shared/services/web-push.service';
 import {
   BadRequestException,
   Body,
-  ConflictException,
   Controller,
   Get,
   InternalServerErrorException,
+  Patch,
   Post,
   Req,
   Res,
@@ -29,6 +30,7 @@ export class AuthController {
     private config: ConfigService,
     private userService: UserService,
     private authService: AuthService,
+    private webPushService: WebPushService,
   ) {}
 
   @Get('user')
@@ -40,7 +42,27 @@ export class AuthController {
       await catchPromiseError(this.userService.findById(id));
 
     if (getUserError) {
-      throw new ConflictException();
+      throw new BadRequestException('User was not found');
+    }
+
+    return user;
+  }
+
+  @Patch('user/update-push-subscription')
+  @UseGuards(AuthGuard)
+  async updatePushSubscription(
+    @Req() req: Request,
+    @Body() pushSubscription: PushSubscriptionData
+  ): Promise<UserDto> {
+    const { jwt } = req.cookies;
+    const { id } = decode(jwt) as JWTPayload;
+    const [updateUserError, user] =
+      await catchPromiseError(
+        this.userService.updatePushSubscription(id, pushSubscription)
+      );
+
+    if (updateUserError) {
+      throw new InternalServerErrorException('Error when updating user has occurred');
     }
 
     return user;
@@ -101,6 +123,18 @@ export class AuthController {
     if (!passwordIsValid) {
       throw new BadRequestException('Password is not valid');
     }
+
+    const { pushSubscriptions } = user;
+    const [pushSubscription] = pushSubscriptions;
+
+    const [error, sendNotificationResult] = await catchPromiseError(
+      this.webPushService.sendNotification(
+        pushSubscription,
+        'You just successfully logged in'
+      )
+    );
+
+    console.log(sendNotificationResult || error);
 
     await this.authService.setAuthorizationCookie(response, { id: user._id });
 

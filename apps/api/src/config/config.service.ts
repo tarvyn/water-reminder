@@ -9,6 +9,7 @@ type EnvironmentKey =
   | 'googleClientId'
   | 'googleClientSecret'
   | 'mongodbConnectionString'
+  | 'vapidPrivateKey'
   | 'clientHost'
   | 'clientPort'
   | 'apiHost'

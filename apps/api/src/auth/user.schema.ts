@@ -1,8 +1,8 @@
+import { User } from '@api/auth/auth-user.model';
 import { SchemaCollection } from '@api/shared/collections';
-import { UserDto } from '@water-reminder/api-interfaces';
 import { Document, Schema, SchemaDefinition, SchemaTypes } from 'mongoose';
 
-const userSchemaDefinition: Record<keyof Omit<UserDto, '_id'>, SchemaDefinition['']> = {
+const userSchemaDefinition: Record<keyof Omit<User, '_id'>, SchemaDefinition['']> = {
   email: {
     type: SchemaTypes.String,
     required: true
@@ -30,10 +30,23 @@ const userSchemaDefinition: Record<keyof Omit<UserDto, '_id'>, SchemaDefinition[
   thirdPartyId: {
     type: SchemaTypes.String,
     required: false
-  }
+  },
+  pushSubscriptions: [{
+    endpoint: {
+      type: SchemaTypes.String
+    },
+    keys: {
+      auth: {
+        type: SchemaTypes.String
+      },
+      p256dh: {
+        type: SchemaTypes.String
+      }
+    }
+  }]
 };
 
-export type UserDocument = Readonly<Document> & UserDto;
+export type UserDocument = Readonly<Document> & User;
 
 export const UserSchema = new Schema(userSchemaDefinition, {
   versionKey: false

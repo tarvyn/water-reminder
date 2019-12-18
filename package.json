@@ -6,11 +6,12 @@
     "ng": "ng",
     "nx": "nx",
     "start:angular-client": "ng serve frontend-angular --ssl",
-    "start:react-client": "ng serve frontend-react --ssl --port=443 && workbox injectManifest",
+    "start:react-client": "ng serve frontend-react --port=8080 && workbox injectManifest",
     "start:api": "ng serve api",
     "start": "npm run start:react-client && npm run start:api",
     "build:workbox": "workbox injectManifest apps/frontend-react/src/workbox-config.js",
     "build:frontend-react": "ng build frontend-react --prod && npm run build:workbox",
+    "build:frontend-react:dev": "ng build frontend-react --sourceMap=true --optimization=false --extractCss=true && --watch=true && npm run build:workbox",
     "build:api": "ng build api --prod",
     "build": "npm run build:frontend-react && npm run build:api",
     "test": "ng test",
@@ -77,6 +78,7 @@
     "redux-observable": "^1.2.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.3",
+    "web-push": "^3.4.3",
     "workbox-build": "^4.3.1",
     "workbox-cli": "^4.3.1",
     "workbox-sw": "^4.3.1",
@@ -112,6 +114,7 @@
     "@types/react-dom": "16.9.2",
     "@types/react-router-dom": "5.1.0",
     "@types/redux-form": "^8.2.0",
+    "@types/web-push": "^3.3.0",
     "@types/workbox-background-sync": "^4.3.0",
     "@types/workbox-broadcast-update": "^4.3.0",
     "@types/workbox-cacheable-response": "^4.3.0",
@@ -132,6 +135,7 @@
     "cypress": "3.4.1",
     "eslint": "^6.1.0",
     "eslint-plugin-react-hooks": "^2.3.0",
+    "http-server": "^0.12.0",
     "jest": "24.1.0",
     "jest-preset-angular": "7.0.0",
     "prettier": "1.18.2",
@@ -141,6 +145,7 @@
     "tslint": "~5.11.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-immutable": "^6.0.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "utility-types": "^3.10.0"
   }
 }

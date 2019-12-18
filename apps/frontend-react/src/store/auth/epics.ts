@@ -3,9 +3,10 @@ import { exposeOfTypeOperator } from '@react-client/shared/rxjs-operators/expose
 import { Actions, ActionType, authActions } from '@react-client/store/auth/actions';
 import { ErrorResponse } from '@water-reminder/api-interfaces';
 import { combineEpics, Epic } from 'redux-observable';
-import { of } from 'rxjs';
+import { EMPTY, from, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import history from '@react-client/shared/models/history';
+import { actualizePushSubscription } from '../../service-worker/push-notifications';
 
 const ofType = exposeOfTypeOperator<Actions>();
 
@@ -48,9 +49,19 @@ export const getUserEpic: Epic = action$ => action$.pipe(
   ))
 );
 
+export const actualizePushSubscriptionEpic: Epic = action$ => action$.pipe(
+  ofType(ActionType.LoginSuccess),
+  switchMap(() => from(actualizePushSubscription()).pipe(
+    // TODO: fix;
+    switchMap(() => EMPTY),
+    catchError(() => EMPTY)
+  ))
+);
+
 export const epics = combineEpics(
   signUp,
   login,
   getUserEpic,
-  logoutEpic
+  logoutEpic,
+  actualizePushSubscriptionEpic
 );

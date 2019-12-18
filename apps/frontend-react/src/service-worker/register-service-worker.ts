@@ -1,6 +1,7 @@
+import { catchPromiseError } from '@water-reminder/utils';
 import { Workbox } from 'workbox-window';
 
-export const registerServiceWorker = () => {
+export const registerServiceWorker = async () => {
   if (!('serviceWorker' in navigator)) {
     return;
   }
@@ -28,5 +29,9 @@ export const registerServiceWorker = () => {
     }
   });
 
-  wb.register();
+  const [registrationError] = await catchPromiseError(wb.register());
+
+  if (registrationError) {
+    console.log('Service worker registration error', registrationError);
+  }
 };

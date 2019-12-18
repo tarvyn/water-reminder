@@ -38,9 +38,9 @@ export const rootReducer: Reducer<RootState, Action> = (state, action) => {
 
   return appReducer(state, {
     ...action,
-    payload: {
+    payload: typeof action.payload === 'object' ? {
       ...(action.payload || {}),
       userId
-    }
+    } : action.payload
   });
 };

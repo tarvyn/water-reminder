@@ -1,7 +1,8 @@
+import { PushSubscriptionData, User } from '@api/auth/auth-user.model';
 import { PASSWORD_HASH_COMPLEXITY, SocialProvider } from '@api/auth/auth.model';
 import { UserDocument } from '@api/auth/user.schema';
 import { SchemaCollection } from '@api/shared/collections';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { OmitId, UserDto, UserSignUpDto } from '@water-reminder/api-interfaces';
 import { catchPromiseError } from '@water-reminder/utils';
@@ -16,15 +17,15 @@ export class UserService {
     private readonly userModel: Model<UserDocument>
   ) {}
 
-  async findById(id: string): Promise<UserDto> {
+  async findById(id: string): Promise<UserDocument> {
     return this.userModel.findById(id);
   }
 
-  async findByEmail(email: UserDto['email']): Promise<UserDto> {
+  async findByEmail(email: UserDto['email']): Promise<UserDocument> {
     return this.userModel.findOne({ email });
   }
 
-  async create(userSignUpData: UserSignUpDto): Promise<UserDto> {
+  async create(userSignUpData: UserSignUpDto): Promise<UserDocument> {
     const hashedPassword = await hash(userSignUpData.password, PASSWORD_HASH_COMPLEXITY);
     const [createUserError, [user]] =
       await catchPromiseError(this.userModel.create([{
@@ -69,5 +70,23 @@ export class UserService {
     }
 
     return createdUser;
+  }
+
+  async updatePushSubscription(
+    id: string,
+    pushSubscription: PushSubscriptionData
+  ): Promise<UserDocument> {
+    const [findByIdAndUpdateError, user] =
+      await catchPromiseError(
+        this.userModel.findByIdAndUpdate(id, {
+          pushSubscriptions: [pushSubscription]
+        })
+      );
+
+    if (findByIdAndUpdateError) {
+      throw new BadRequestException('User was not found');
+    }
+
+    return user;
   }
 }
