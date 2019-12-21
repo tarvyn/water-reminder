@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compileOnSave": true,
+  "compilerOptions": {
+    "outDir": "./src",
+    "rootDir": "./src/service-worker",
+    "lib": [
+      "es2018",
+      "webworker"
+    ],
+    "types": []
+  },
+  "include": [
+    "src/service-worker/service-worker.ts"
+  ]
+}

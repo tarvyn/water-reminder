@@ -10,6 +10,6 @@ module.exports = {
   ],
   "dontCacheBustURLsMatching": new RegExp('.+\.[a-f0-9]{20}\..+'),
   "maximumFileSizeToCacheInBytes": 5000000,
-  "swSrc": "apps/frontend-react/src/service-worker.js",
+  "swSrc": "dist/apps/frontend-react/service-worker/service-worker.js",
   "swDest": "dist/apps/frontend-react/service-worker.js"
 };

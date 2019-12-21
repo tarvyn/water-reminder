@@ -4,6 +4,10 @@
     "outDir": "../../dist/out-tsc",
     "types": []
   },
-  "exclude": ["**/*.spec.ts", "**/*.spec.tsx"],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "src/service-worker/service-worker.ts"
+  ],
   "include": ["**/*.ts", "**/*.tsx"]
 }
