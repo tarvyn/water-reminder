@@ -1,5 +1,5 @@
 import { } from '@water-reminder/api-interfaces';
-import { GoogleAuthUserPayload } from '@api/auth/auth.model';
+import { GoogleAuthUserPayload } from '../features/auth/auth.model';
 
 declare module 'express' {
   interface Request {

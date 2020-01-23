@@ -1,4 +1,4 @@
-import { Actions, ActionType } from '@react-client/store/reminder/actions';
+import { Actions, ActionType } from '@react-client/store/hydration/actions';
 import { isEqual } from 'date-fns';
 import { initialState, State } from './state';
 

@@ -1,5 +1,5 @@
 import { ConfigService } from '@api/config/config.service';
-import { verifyJWT } from '@api/utils/verify-jwt';
+import { verifyJWT } from '@api/shared/utils/verify-jwt';
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Request } from 'express';
 

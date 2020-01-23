@@ -2,7 +2,7 @@ import { authActions } from '@react-client/store/auth/actions';
 import { RootState } from '@react-client/store/reducer';
 import SignIn from '@react-client/ui/auth/sign-in/sign-in';
 import SignUp from '@react-client/ui/auth/sign-up/sign-up';
-import Doses from '@react-client/ui/reminder/doses/doses';
+import Doses from '@react-client/ui/hydration/doses/doses';
 import NavBar from '@react-client/ui/root/nav-bar/nav-bar';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

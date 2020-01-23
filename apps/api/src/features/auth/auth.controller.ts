@@ -1,10 +1,9 @@
-import { PushSubscriptionData, UserSignInData, UserSignUpData } from '@api/auth/auth-user.model';
-import { AuthGuard } from '@api/auth/auth.guard';
-import { JWTPayload } from '@api/auth/auth.model';
-import { AuthService } from '@api/auth/auth.service';
-import { UserService } from '@api/auth/user.service';
+import { PushSubscriptionData, UserSignInData, UserSignUpData } from './auth-user.model';
+import { AuthGuard } from './auth.guard';
+import { JWTPayload } from './auth.model';
+import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 import { ConfigService } from '@api/config/config.service';
-import { WebPushService } from '@api/shared/services/web-push.service';
 import {
   BadRequestException,
   Body,
@@ -30,7 +29,6 @@ export class AuthController {
     private config: ConfigService,
     private userService: UserService,
     private authService: AuthService,
-    private webPushService: WebPushService,
   ) {}
 
   @Get('user')
@@ -124,17 +122,7 @@ export class AuthController {
       throw new BadRequestException('Password is not valid');
     }
 
-    const { pushSubscriptions } = user;
-    const [pushSubscription] = pushSubscriptions;
-
-    const [error, sendNotificationResult] = await catchPromiseError(
-      this.webPushService.sendNotification(
-        pushSubscription,
-        'You just successfully logged in'
-      )
-    );
-
-    console.log(sendNotificationResult || error);
+    await this.userService.notifyUser(user);
 
     await this.authService.setAuthorizationCookie(response, { id: user._id });
 

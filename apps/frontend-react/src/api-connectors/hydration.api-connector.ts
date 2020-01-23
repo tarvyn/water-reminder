@@ -1,12 +1,12 @@
 import { API_PREFIX } from '@react-client/shared/constants/api-prefix';
 import { parseResponse } from '@react-client/shared/rxjs-operators/parse-response';
-import { CreateDoseDto, DoseDto, DoseTimeRange, DoseVolume } from '@water-reminder/api-interfaces';
+import { CreateDoseDto, DoseDto, DoseTimeRange } from '@water-reminder/api-interfaces';
 import { Observable } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { first, map } from 'rxjs/operators';
 
-class ReminderApiConnector {
-  private url = `${API_PREFIX}/reminder`;
+class HydrationApiConnector {
+  private url = `${API_PREFIX}/hydration`;
 
   getDoses(): Observable<Array<DoseDto>> {
     const params = new URLSearchParams({ timeRange: DoseTimeRange.today });
@@ -18,7 +18,7 @@ class ReminderApiConnector {
   }
 
   createDose(createDoseData: CreateDoseDto): Observable<DoseDto> {
-    return fromFetch('/api/reminder/doses', {
+    return fromFetch(`${this.url}/doses`, {
       method: 'POST',
       body: JSON.stringify(createDoseData),
       headers: { 'Content-Type': 'application/json' }
@@ -29,7 +29,7 @@ class ReminderApiConnector {
   }
 
   deleteDose(id: string): Observable<void> {
-    return fromFetch(`/api/reminder/doses/${id}`, {
+    return fromFetch(`${this.url}/doses/${id}`, {
       method: 'DELETE'
     }).pipe(
       // TODO: fix
@@ -39,4 +39,4 @@ class ReminderApiConnector {
   }
 }
 
-export const reminderApiConnector = new ReminderApiConnector();
+export const hydrationApiConnector = new HydrationApiConnector();

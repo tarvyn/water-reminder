@@ -1,5 +1,5 @@
-import { AuthGuard } from '@api/auth/auth.guard';
-import { JWTPayload } from '@api/auth/auth.model';
+import { AuthGuard } from '../auth/auth.guard';
+import { JWTPayload } from '../auth/auth.model';
 import { ConfigService } from '@api/config/config.service';
 import {
   Body,
@@ -19,14 +19,14 @@ import { catchPromiseError } from '@water-reminder/utils';
 import { Request } from 'express';
 import { decode } from 'jsonwebtoken';
 import { CreateDoseData } from './dose.model';
-import { ReminderService } from './reminder.service';
+import { HydrationService } from './hydration.service';
 
-@Controller('reminder')
+@Controller('hydration')
 @UseGuards(AuthGuard)
-export class ReminderController {
+export class HydrationController {
   constructor(
     private config: ConfigService,
-    private reminderService: ReminderService,
+    private hydrationService: HydrationService,
   ) {}
 
   @Get('doses')
@@ -37,7 +37,7 @@ export class ReminderController {
     const { jwt } = req.cookies;
     const { id } = decode(jwt) as JWTPayload;
     const [getDosesError, doses] = await catchPromiseError(
-      this.reminderService.findDrunkUserDosesForToday(id)
+      this.hydrationService.findDrunkUserDosesForToday(id)
     );
 
     if (getDosesError) {
@@ -55,7 +55,7 @@ export class ReminderController {
     const { jwt } = req.cookies;
     const { id } = decode(jwt) as JWTPayload;
     const [createDoseError, dose] = await catchPromiseError(
-      this.reminderService.createDose({ userId: id, volume, time })
+      this.hydrationService.createDose({ userId: id, volume, time })
     );
 
     if (createDoseError) {
@@ -71,7 +71,7 @@ export class ReminderController {
     @Param('id') doseId: string
   ): Promise<void> {
     const [deleteDoseError] = await catchPromiseError(
-      this.reminderService.deleteDose(doseId)
+      this.hydrationService.deleteDose(doseId)
     );
 
     if (deleteDoseError) {

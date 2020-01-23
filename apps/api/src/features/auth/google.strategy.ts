@@ -1,6 +1,6 @@
-import { GoogleAuthUserPayload, SocialProvider } from '@api/auth/auth.model';
-import { AuthService } from '@api/auth/auth.service';
-import { UserService } from '@api/auth/user.service';
+import { GoogleAuthUserPayload, SocialProvider } from './auth.model';
+import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 import { ConfigService } from '@api/config/config.service';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';

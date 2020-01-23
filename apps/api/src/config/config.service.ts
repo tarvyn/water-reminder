@@ -1,5 +1,5 @@
 import { environment } from '@api/environments/environment';
-import { rootPath } from '@api/utils/root-path';
+import { rootPath } from '@api/shared/utils/root-path';
 import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';

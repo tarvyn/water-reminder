@@ -1,27 +1,27 @@
 import { Action } from '@react-client/shared/types/redux';
 import { authStore } from '@react-client/store/auth';
 import { ActionType } from '@react-client/store/auth/actions';
-import { reminderStore } from '@react-client/store/reminder';
+import { hydrationStore } from '@react-client/store/hydration';
 import { Reducer } from 'react';
 import { combineReducers } from 'redux';
 import { FormStateMap, reducer as formReducer } from 'redux-form';
 import { State as AuthState } from './auth/state';
-import { State as ReminderState } from './reminder/state';
+import { State as HydrationState } from './hydration/state';
 
 export interface RootState {
-  readonly reminder: ReminderState;
+  readonly hydration: HydrationState;
   readonly auth: AuthState;
   readonly form: FormStateMap;
 }
 
 export const rootInitialState: RootState = {
   auth: authStore.initialState,
-  reminder: reminderStore.initialState,
+  hydration: hydrationStore.initialState,
   form: undefined
 };
 
 export const appReducer = combineReducers<RootState>({
-  reminder: reminderStore.reducer,
+  hydration: hydrationStore.reducer,
   auth: authStore.reducer,
   form: formReducer
 });

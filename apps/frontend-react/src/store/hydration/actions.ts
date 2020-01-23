@@ -1,20 +1,20 @@
 import { ExtractActionsType } from '@react-client/shared/types/redux';
-import { DoseViewModel } from '@react-client/shared/types/reminder';
+import { DoseViewModel } from '@react-client/shared/types/hydration';
 import { DoseDto } from '@water-reminder/api-interfaces';
 
 export enum ActionType {
-  GetDoses = '[reminder] get doses',
-  GetDosesSuccess = '[reminder] get doses success',
-  GetDosesError = '[reminder] get doses error',
-  CreateDose = '[reminder] create dose',
-  CreateDoseSuccess = '[reminder] create dose success',
-  CreateDoseError = '[reminder] create dose error',
-  DeleteDose = '[reminder] delete dose',
-  DeleteDoseSuccess = '[reminder] delete dose success',
-  DeleteDoseError = '[reminder] delete dose error',
+  GetDoses = '[hydration] get doses',
+  GetDosesSuccess = '[hydration] get doses success',
+  GetDosesError = '[hydration] get doses error',
+  CreateDose = '[hydration] create dose',
+  CreateDoseSuccess = '[hydration] create dose success',
+  CreateDoseError = '[hydration] create dose error',
+  DeleteDose = '[hydration] delete dose',
+  DeleteDoseSuccess = '[hydration] delete dose success',
+  DeleteDoseError = '[hydration] delete dose error',
 }
 
-export const reminderActions = {
+export const hydrationActions = {
   getDoses: () => {
     return {
       type: ActionType.GetDoses,
@@ -70,4 +70,4 @@ export const reminderActions = {
   },
 };
 
-export type Actions = ExtractActionsType<typeof reminderActions>;
+export type Actions = ExtractActionsType<typeof hydrationActions>;

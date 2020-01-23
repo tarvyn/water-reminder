@@ -1,4 +1,4 @@
-import { JWT_COOKIE_MAX_AGE, JWT_COOKIE_NAME, JWTPayload } from '@api/auth/auth.model';
+import { JWT_COOKIE_MAX_AGE, JWT_COOKIE_NAME, JWTPayload } from './auth.model';
 import { ConfigService } from '@api/config/config.service';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Response } from 'express';

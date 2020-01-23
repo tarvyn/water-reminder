@@ -1,4 +1,4 @@
-import { DoseViewModel } from '@react-client/shared/types/reminder';
+import { DoseViewModel } from '@react-client/shared/types/hydration';
 
 export interface State {
   readonly doses: Array<DoseViewModel>;

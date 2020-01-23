@@ -1,7 +1,7 @@
 import { Container, createStyles, Fab, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
 import { Add, Delete, LocalDrink } from '@material-ui/icons';
 import { RootState } from '@react-client/store/reducer';
-import { reminderActions } from '@react-client/store/reminder/actions';
+import { hydrationActions } from '@react-client/store/hydration/actions';
 import { DoseVolume } from '@water-reminder/api-interfaces';
 import { format } from 'date-fns';
 import React, { useEffect } from 'react';
@@ -33,17 +33,17 @@ const useStyles = makeStyles((theme: Theme) =>
 const Doses = () => {
   const classes = useStyles(undefined);
   const dispatch = useDispatch();
-  const doses = useSelector((state: RootState) => state.reminder.doses);
+  const doses = useSelector((state: RootState) => state.hydration.doses);
   const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
-  const createDose = () => dispatch(reminderActions.createDose({
+  const createDose = () => dispatch(hydrationActions.createDose({
     time: new Date(),
     volume: DoseVolume.cup
   }));
-  const deleteDose = (id: string) => dispatch(reminderActions.deleteDose(id));
+  const deleteDose = (id: string) => dispatch(hydrationActions.deleteDose(id));
 
   useEffect(
     () => {
-      dispatch(reminderActions.getDoses());
+      dispatch(hydrationActions.getDoses());
     },
     []
   );

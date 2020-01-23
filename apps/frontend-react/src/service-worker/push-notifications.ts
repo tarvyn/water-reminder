@@ -24,6 +24,8 @@ export const actualizePushSubscription = async (): Promise<void> => {
   if (subscription === null) {
     throw new Error('Not subscribed to push service!');
   } else {
-    return await pushSubscriptionApiConnector.sendSubscription(subscription).toPromise();
+    return await pushSubscriptionApiConnector
+      .sendSubscription(subscription)
+      .toPromise();
   }
 };

@@ -1,4 +1,4 @@
-import { CreateDose } from '../../../../apps/api/src/reminder/dose.model';
+import { CreateDose } from '../../../../apps/api/src/features/hydration/dose.model';
 
 export type OmitId<T extends BaseEntity> = Omit<T, '_id'>;
 

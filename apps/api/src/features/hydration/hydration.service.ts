@@ -7,10 +7,10 @@ import { CreateDose } from './dose.model';
 import { DoseDocument } from './dose.schema';
 
 @Injectable()
-export class ReminderService {
+export class HydrationService {
   constructor(
     @InjectModel(SchemaCollection.Dose)
-    private readonly doseModel: Model<DoseDocument>
+    private readonly doseModel: Model<DoseDocument>,
   ) {}
 
   async findDrunkUserDosesForToday(userId: string): Promise<Array<DoseDto>> {

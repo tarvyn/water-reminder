@@ -1,4 +1,4 @@
-import { PushSubscriptionData } from '@api/auth/auth-user.model';
+import { PushSubscriptionData } from '../../features/auth/auth-user.model';
 import { ConfigService } from '@api/config/config.service';
 import { Injectable } from '@nestjs/common';
 import { vapidPublicKey } from '@water-reminder/api-interfaces';

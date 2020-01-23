@@ -1,7 +1,8 @@
-import { PushSubscriptionData, User } from '@api/auth/auth-user.model';
-import { PASSWORD_HASH_COMPLEXITY, SocialProvider } from '@api/auth/auth.model';
-import { UserDocument } from '@api/auth/user.schema';
+import { PushSubscriptionData, User } from './auth-user.model';
+import { PASSWORD_HASH_COMPLEXITY, SocialProvider } from './auth.model';
+import { UserDocument } from './user.schema';
 import { SchemaCollection } from '@api/shared/collections';
+import { WebPushService } from '@api/shared/services/web-push.service';
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { OmitId, UserDto, UserSignUpDto } from '@water-reminder/api-interfaces';
@@ -14,7 +15,8 @@ import { Profile } from 'passport-google-oauth20';
 export class UserService {
   constructor(
     @InjectModel(SchemaCollection.User)
-    private readonly userModel: Model<UserDocument>
+    private readonly userModel: Model<UserDocument>,
+    private readonly webPushService: WebPushService,
   ) {}
 
   async findById(id: string): Promise<UserDocument> {
@@ -88,5 +90,35 @@ export class UserService {
     }
 
     return user;
+  }
+
+  async notifyUser(user: User): Promise<void> {
+    const { pushSubscriptions } = user;
+    const [pushSubscription] = pushSubscriptions;
+
+    if (!pushSubscription) {
+      console.log('subscription was not found for user', user.email);
+
+      return;
+    }
+
+    const [error, sendNotificationResult] = await catchPromiseError(
+      this.webPushService.sendNotification(
+        pushSubscription,
+        'You just successfully logged in'
+      )
+    );
+
+    console.log('notification result', sendNotificationResult || error);
+  }
+
+  async notifyAllUsers(): Promise<void> {
+    console.log('notifyAllUsers has been called');
+    const users = await this.userModel.find();
+
+    await Promise.all(users.map(user => {
+      console.log('notifyUser was called for', user.email);
+      this.notifyUser(user);
+    }));
   }
 }

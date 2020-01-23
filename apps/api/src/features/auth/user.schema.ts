@@ -1,4 +1,4 @@
-import { User } from '@api/auth/auth-user.model';
+import { User } from './auth-user.model';
 import { SchemaCollection } from '@api/shared/collections';
 import { Document, Schema, SchemaDefinition, SchemaTypes } from 'mongoose';
 
