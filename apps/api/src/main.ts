@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import { ReminderService } from './features/reminder/reminder.service';
+require('newrelic');
 
 async function bootstrap(): Promise<void> {
   const globalPrefix = 'api';
