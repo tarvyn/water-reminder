@@ -21,37 +21,43 @@ self.addEventListener('push', (event) => {
       actions: [
         {
           action: 'Drink',
-          icon: 'assets/images/icon-192x192.png',
-          title: 'Time to drink water'
+          icon: 'assets/images/water-drop-24x24.png',
+          title: 'Drink'
         }
       ],
-      vibrate: [500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500],
+      vibrate: [100, 50, 100],
       badge: 'assets/images/icon-192x192.png',
       icon: 'assets/images/icon-192x192.png',
-      body: 'Time to start drinking water systematically'
     })
   );
 });
 
+function sendDrinkMessage(client: WindowClient): void {
+  client.postMessage({
+    type: 'drink-dose'
+  });
+}
+
 self.addEventListener('notificationclick', event => {
-  console.log('On notification click: ', event.notification.tag);
   event.notification.close();
 
-  // This looks to see if the current is already open and
-  // focuses if it is
   event.waitUntil(self.clients.matchAll({ type: 'window' })
     .then(clientList => {
-      console.log('clientList', clientList);
       const activeClient = clientList.find(
         client => 'focus' in client
       );
 
       if (activeClient) {
-        return (activeClient as any).focus();
+        (activeClient as WindowClient).focus();
+        sendDrinkMessage(activeClient as WindowClient);
+
+        return;
       }
 
       if (self.clients.openWindow) {
-        return self.clients.openWindow('/sign-in');
+        self.clients.openWindow('/').then(sendDrinkMessage);
+
+        return;
       }
     }));
 });

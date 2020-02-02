@@ -1,5 +1,6 @@
 import { catchPromiseError } from '@water-reminder/utils';
 import { Workbox } from 'workbox-window';
+import { listenPostMessages } from './post-messages';
 
 export const registerServiceWorker = async () => {
   if (!('serviceWorker' in navigator)) {
@@ -34,4 +35,6 @@ export const registerServiceWorker = async () => {
   if (registrationError) {
     console.log('Service worker registration error', registrationError);
   }
+
+  listenPostMessages();
 };

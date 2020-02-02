@@ -1,4 +1,4 @@
-import { CreateDose } from '../../../../apps/api/src/features/hydration/dose.model';
+import { CreateDose } from '../../../../apps/api/src/modules/hydration/dose.model';
 
 export type OmitId<T extends BaseEntity> = Omit<T, '_id'>;
 
@@ -14,6 +14,10 @@ export interface UserDto extends BaseEntity {
   readonly imageUrl: string;
   readonly provider: string;
   readonly thirdPartyId: string;
+  readonly awakeTime: number;
+  readonly sleepTime: number;
+  readonly nextDrinkTime: string;
+  readonly utcOffset: number;
 }
 
 export type UserLoginDto = Pick<UserDto, 'email' | 'password'>;
@@ -21,7 +25,7 @@ export type UserLoginDto = Pick<UserDto, 'email' | 'password'>;
 export type UserSignUpDto = Pick<UserDto, 'email' | 'password' | 'firstName' | 'lastName'>;
 
 export interface DoseDto extends BaseEntity {
-  readonly time: string;
+  readonly time: string | Date;
   readonly volume: DoseVolume;
   readonly userId: string;
 }
@@ -31,10 +35,6 @@ export type CreateDoseDto = Omit<CreateDose, '_id' | 'userId'>;
 export interface ErrorResponse {
   readonly statusCode: number;
   readonly message: string;
-}
-
-export enum DoseTimeRange {
-  today = 'today'
 }
 
 export enum DoseVolume {

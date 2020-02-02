@@ -42,13 +42,6 @@ class AuthApiConnector {
       first()
     );
   }
-
-  getUser(): Observable<UserDto> {
-    return fromFetch(`${this.url}/user`).pipe(
-      parseResponse<UserDto>(),
-      first()
-    );
-  }
 }
 
 export const authApiConnector = new AuthApiConnector();

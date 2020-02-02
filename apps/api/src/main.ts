@@ -1,9 +1,9 @@
-import { AppModule } from './features/app.module';
+import { AppModule } from './modules/app.module';
 import { environment } from '@api/environments/environment';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
-import { ReminderService } from './features/reminder/reminder.service';
+import { ReminderService } from './modules/reminder/reminder.service';
 require('newrelic');
 
 async function bootstrap(): Promise<void> {

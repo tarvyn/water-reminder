@@ -1,4 +1,5 @@
 import { authApiConnector } from '@react-client/api-connectors/auth.api-connector';
+import { userApiConnector } from '@react-client/api-connectors/user.api-connector';
 import history from '@react-client/shared/models/history';
 import { exposeOfTypeOperator } from '@react-client/shared/rxjs-operators/expose-of-type-operator';
 import {
@@ -58,7 +59,7 @@ export const getUserEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionType.GetUser),
     switchMap(() =>
-      authApiConnector.getUser().pipe(
+      userApiConnector.getUser().pipe(
         map(user => authActions.getUserSuccess(user)),
         catchError(error => {
           history.push('/sign-in');
@@ -83,10 +84,32 @@ export const actualizePushSubscriptionEpic: Epic = action$ =>
     )
   );
 
+export const actualizeUserUtcOffsetEpic: Epic = action$ =>
+  action$.pipe(
+    filter(action =>
+      [ActionType.LoginSuccess, ActionType.GetUserSuccess].includes(action.type)
+    ),
+    switchMap(() =>
+      from(
+        userApiConnector.updateUser({
+          utcOffset: new Date().getTimezoneOffset() / 60,
+          // TODO: implement ui
+          awakeTime: 9.5,
+          sleepTime: 23
+        })
+      ).pipe(
+        // TODO: fix;
+        switchMap(() => EMPTY),
+        catchError(() => EMPTY)
+      )
+    )
+  );
+
 export const epics = combineEpics(
   signUp,
   login,
   getUserEpic,
   logoutEpic,
-  actualizePushSubscriptionEpic
+  actualizePushSubscriptionEpic,
+  actualizeUserUtcOffsetEpic
 );

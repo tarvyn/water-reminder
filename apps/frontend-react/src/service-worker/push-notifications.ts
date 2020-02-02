@@ -1,4 +1,4 @@
-import { pushSubscriptionApiConnector } from '@react-client/api-connectors/push-subscription.api-connector';
+import { userApiConnector } from '@react-client/api-connectors/user.api-connector';
 import { urlBase64ToUint8Array } from '@react-client/shared/utilities/base64-to-unit8-array';
 import { vapidPublicKey } from '@water-reminder/api-interfaces';
 
@@ -24,8 +24,8 @@ export const actualizePushSubscription = async (): Promise<void> => {
   if (subscription === null) {
     throw new Error('Not subscribed to push service!');
   } else {
-    return await pushSubscriptionApiConnector
-      .sendSubscription(subscription)
+    return await userApiConnector
+      .updateUserSubscription(subscription)
       .toPromise();
   }
 };
