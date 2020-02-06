@@ -1,9 +1,10 @@
+import { OmitId } from '@water-reminder/api-interfaces';
 import { SchemaCollection } from '../shared/collections';
 import { Document, Schema, SchemaDefinition, SchemaTypes } from 'mongoose';
 import { User } from './user.model';
 
 const userSchemaDefinition: Record<
-  keyof Omit<User, '_id'>,
+  keyof OmitId<User>,
   SchemaDefinition['']
 > = {
   email: {
@@ -61,8 +62,8 @@ const userSchemaDefinition: Record<
     type: SchemaTypes.Date,
     required: false
   },
-  utcOffset: {
-    type: SchemaTypes.Number,
+  timeZone: {
+    type: SchemaTypes.String,
     required: false
   }
 };

@@ -1,7 +1,7 @@
-import { CreateDoseDto, DoseDto, DoseVolume } from '@water-reminder/api-interfaces';
+import { CreateDoseDto, DoseDto, DoseVolume, OmitId } from '@water-reminder/api-interfaces';
 import { IsDateString, IsInt } from 'class-validator';
 
-export type CreateDose = Omit<DoseDto, '_id'>;
+export type CreateDose = OmitId<DoseDto>;
 
 export class CreateDoseData implements CreateDoseDto {
   @IsInt()

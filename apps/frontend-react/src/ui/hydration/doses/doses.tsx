@@ -1,4 +1,13 @@
-import { Container, createStyles, Fab, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
+import {
+  Chip,
+  Container,
+  createStyles,
+  Fab,
+  makeStyles,
+  Paper,
+  Theme,
+  Typography
+} from '@material-ui/core';
 import { Add, Delete, LocalDrink } from '@material-ui/icons';
 import { RootState } from '@react-client/store/reducer';
 import { hydrationActions } from '@react-client/store/hydration/actions';
@@ -26,49 +35,57 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: theme.spacing(4),
       right: theme.spacing(4),
       backgroundColor: theme.palette.secondary.main
-    },
-  }),
+    }
+  })
 );
 
 const Doses = () => {
   const classes = useStyles(undefined);
   const dispatch = useDispatch();
+  const nextDrinkTime = useSelector(
+    (state: RootState) => state.reminder.nextDrinkTime
+  );
   const doses = useSelector((state: RootState) => state.hydration.doses);
   const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
-  const createDose = () => dispatch(hydrationActions.createDose({
-    time: new Date(),
-    volume: DoseVolume.cup
-  }));
+  const createDose = () =>
+    dispatch(
+      hydrationActions.createDose({
+        time: new Date(),
+        volume: DoseVolume.cup
+      })
+    );
   const deleteDose = (id: string) => dispatch(hydrationActions.deleteDose(id));
 
-  useEffect(
-    () => {
-      dispatch(hydrationActions.getDoses());
-    },
-    []
-  );
+  useEffect(() => {
+    dispatch(hydrationActions.getDoses());
+  }, []);
 
-  return <Container component='main' maxWidth='xs'>
-    <div>
-      {(doses || []).map(dose =>
-        <Paper key={dose._id} className={classes.dose}>
-          <Typography component='span' variant='subtitle2'>
-            {format(new Date(dose.time), 'yyyy.MM.dd (HH:mm)')}
-          </Typography>
-          <div className={classes.caption}>
-            <LocalDrink />
+  return (
+    <Container component='main' maxWidth='xs'>
+      {nextDrinkTime && <Chip label={format(nextDrinkTime, 'dd.MM.yyyy HH:mm')} />}
+      <div>
+        {(doses || []).map(dose => (
+          <Paper key={dose._id} className={classes.dose}>
             <Typography component='span' variant='subtitle2'>
-              {`${dose.volume}ml`}
+              {format(new Date(dose.time), 'yyyy.MM.dd (HH:mm)')}
             </Typography>
-          </div>
-          <Delete onClick={() => deleteDose(dose._id)}/>
-        </Paper>)}
-    </div>
-    {loggedIn &&
-    <Fab onClick={createDose} className={classes.fab} color='secondary'>
-      <Add />
-    </Fab>}
-  </Container>;
+            <div className={classes.caption}>
+              <LocalDrink />
+              <Typography component='span' variant='subtitle2'>
+                {`${dose.volume}ml`}
+              </Typography>
+            </div>
+            <Delete onClick={() => deleteDose(dose._id)} />
+          </Paper>
+        ))}
+      </div>
+      {loggedIn && (
+        <Fab onClick={createDose} className={classes.fab} color='secondary'>
+          <Add />
+        </Fab>
+      )}
+    </Container>
+  );
 };
 
 export default Doses;

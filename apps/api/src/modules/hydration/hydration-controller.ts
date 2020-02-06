@@ -1,4 +1,3 @@
-import { from } from 'rxjs';
 import { AuthGuard } from '../auth/auth.guard';
 import { JWTPayload } from '../auth/auth.model';
 import { ConfigService } from '../config/config.service';
@@ -6,8 +5,8 @@ import {
   Body,
   ConflictException,
   Controller,
-  Delete,
-  Get,
+  Delete, forwardRef,
+  Get, Inject,
   InternalServerErrorException,
   Param,
   Post,
@@ -19,7 +18,8 @@ import { DoseDto } from '@water-reminder/api-interfaces';
 import { catchPromiseError } from '@water-reminder/utils';
 import { Request } from 'express';
 import { decode } from 'jsonwebtoken';
-import { TimeRange } from './dose-validate.model';
+import { ReminderService } from '../reminder/reminder.service';
+import { TimeRange } from './time-range.model';
 import { CreateDoseData } from './dose.model';
 import { HydrationService } from './hydration.service';
 
@@ -64,6 +64,7 @@ export class HydrationController {
       throw new InternalServerErrorException();
     }
 
+    // this.reminderService.calculateNextDrinkTime()
     return dose;
   }
 

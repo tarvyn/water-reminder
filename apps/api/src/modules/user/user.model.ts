@@ -1,5 +1,12 @@
 import { UserDto } from '@water-reminder/api-interfaces';
-import { IsNotEmpty, ValidateNested, IsOptional, IsString, IsNumber, Min, Max } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested
+} from 'class-validator';
 import { PushSubscription } from 'web-push';
 
 export interface User extends UserDto {
@@ -50,12 +57,10 @@ export class UpdateUserData implements Partial<UserDto> {
   sleepTime: number;
 
   @IsOptional()
-  @IsString()
-  nextDrinkTime: string;
+  @IsDateString()
+  nextDrinkTime: Date;
 
   @IsOptional()
-  @IsNumber()
-  @Min(-14)
-  @Max(12)
-  utcOffset: number;
+  @IsString()
+  timeZone: string;
 }

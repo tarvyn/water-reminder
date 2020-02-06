@@ -20,7 +20,7 @@ export function reducer(
     case ActionType.CreateDose:
       return {
         ...state,
-        doses: state.doses.concat([{
+        doses: (state.doses || []).concat([{
           ...action.payload,
           userId: action.payload.userId,
           _id: Math.random().toString()

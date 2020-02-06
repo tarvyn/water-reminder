@@ -1,27 +1,43 @@
 import { DoseVolume, UserDto } from '@water-reminder/api-interfaces';
+import { getTimeZone } from '@water-reminder/utils';
 import {
-  addHours,
   addMilliseconds,
-  differenceInHours,
+  addMinutes,
   differenceInMilliseconds,
-  endOfHour,
   getHours,
-  startOfHour
+  getMinutes,
+  startOfDay
 } from 'date-fns';
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
+import {
+  getMillisecondsInHour,
+  getNow,
+  startOfHalfOfHour
+} from '../shared/utils/date-fns';
 
-export const MILLISECONDS_IN_HOUR = 1000 * 60 * 60;
 // TODO: remove constant and store this data for each user
 const DAILY_TARGET = 2000;
 
+export function getZonedToUtcTime(hours: number, timeZone: string): Date {
+  return zonedTimeToUtc(addMinutes(startOfDay(getNow()), hours * 60), timeZone);
+}
+
 export function calculateRemainingHours(
   user: UserDto,
-  now: Date = new Date()
+  now: Date = getNow()
 ): number {
-  return user.sleepTime + user.utcOffset - getHours(now);
+  const utcToZonedNow = zonedTimeToUtc(
+    utcToZonedTime(now, user.timeZone),
+    getTimeZone()
+  );
+
+  return (
+    user.sleepTime - getHours(utcToZonedNow) - getMinutes(utcToZonedNow) / 60
+  );
 }
 
 export function calculateRemainingDrinks(drunkWaterAmount: number): number {
-  const remainingWaterAmount = DAILY_TARGET - drunkWaterAmount;
+  const remainingWaterAmount = Math.max(0, DAILY_TARGET - drunkWaterAmount);
 
   return Math.round(remainingWaterAmount / DoseVolume.cup);
 }
@@ -31,11 +47,12 @@ export function calculateNextDrinkTime(
   remainingHours: number,
   remainingDrinks: number
 ): Date {
-  const hoursPerDrink = Math.max(1, remainingHours / remainingDrinks);
+  const hoursPerDrink =
+    remainingDrinks > 0 ? Math.max(1, remainingHours / remainingDrinks) : 0;
   const roundedHoursPerDrink = Math.max(1, Math.ceil(hoursPerDrink * 2) / 2);
   const halfOfHourGap =
     differenceInMilliseconds(lastDrinkTime, startOfHalfOfHour(lastDrinkTime)) /
-    MILLISECONDS_IN_HOUR;
+    getMillisecondsInHour();
   const closestDrinkTimeSpan = roundedHoursPerDrink - halfOfHourGap;
   const nextDrinkTimeSpan =
     closestDrinkTimeSpan >= 1
@@ -44,12 +61,6 @@ export function calculateNextDrinkTime(
 
   return addMilliseconds(
     lastDrinkTime,
-    nextDrinkTimeSpan * MILLISECONDS_IN_HOUR
+    nextDrinkTimeSpan * getMillisecondsInHour()
   );
-}
-
-export function startOfHalfOfHour(time: Date): Date {
-  return differenceInHours(endOfHour(time), time) > 0.5
-    ? startOfHour(time)
-    : addHours(startOfHour(time), 0.5);
 }

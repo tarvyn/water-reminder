@@ -13,3 +13,7 @@ export async function catchPromiseError<T>(
     return [e, undefined];
   }
 }
+
+export function getTimeZone(): string {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+}

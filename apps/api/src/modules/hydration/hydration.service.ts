@@ -3,9 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { DoseDto } from '@water-reminder/api-interfaces';
 import { Model } from 'mongoose';
 import { SchemaCollection } from '../shared/collections';
-import { TimeRange } from './dose-validate.model';
 import { CreateDose } from './dose.model';
 import { DoseDocument } from './dose.schema';
+import { TimeRange } from './time-range.model';
 
 @Injectable()
 export class HydrationService {

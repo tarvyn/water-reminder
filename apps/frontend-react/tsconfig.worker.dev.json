@@ -12,5 +12,10 @@
   },
   "include": [
     "src/service-worker/service-worker.ts"
+  ],
+  "references": [
+    {
+      "path": "../../libs/api-interfaces/tsconfig.lib.json"
+    }
   ]
 }

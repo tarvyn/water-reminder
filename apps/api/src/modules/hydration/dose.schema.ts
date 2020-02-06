@@ -1,8 +1,8 @@
 import { SchemaCollection } from '../shared/collections';
-import { DoseDto } from '@water-reminder/api-interfaces';
+import { DoseDto, OmitId } from '@water-reminder/api-interfaces';
 import { Document, Schema, SchemaDefinition, SchemaTypes } from 'mongoose';
 
-type DoseSchemaDefinitionKeys = keyof Omit<DoseDto, '_id'>;
+type DoseSchemaDefinitionKeys = keyof OmitId<DoseDto>;
 
 const doseSchemaDefinition: Record<DoseSchemaDefinitionKeys, SchemaDefinition['']> = {
   time: {

@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException
-} from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserDto, UserSignUpDto } from '@water-reminder/api-interfaces';
 import { catchPromiseError } from '@water-reminder/utils';
@@ -11,16 +7,14 @@ import { Model } from 'mongoose';
 import { Profile } from 'passport-google-oauth20';
 import { PASSWORD_HASH_COMPLEXITY, SocialProvider } from '../auth/auth.model';
 import { SchemaCollection } from '../shared/collections';
-import { WebPushService } from '../shared/services/web-push.service';
-import { PushSubscriptionData, User } from './user.model';
+import { PushSubscriptionData } from './user.model';
 import { UserDocument } from './user.schema';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(SchemaCollection.User)
-    private readonly userModel: Model<UserDocument>,
-    private readonly webPushService: WebPushService
+    private readonly userModel: Model<UserDocument>
   ) {}
 
   async find(): Promise<Array<UserDocument>> {
@@ -131,22 +125,5 @@ export class UserService {
     }
 
     return user;
-  }
-
-  async notify(user: User, message: string): Promise<void> {
-    const { pushSubscriptions } = user;
-    const [pushSubscription] = pushSubscriptions;
-
-    if (!pushSubscription) {
-      console.log('subscription was not found for user', user.email);
-
-      return;
-    }
-
-    const [error, sendNotificationResult] = await catchPromiseError(
-      this.webPushService.sendNotification(pushSubscription, message)
-    );
-
-    console.log('notification result', sendNotificationResult || error);
   }
 }

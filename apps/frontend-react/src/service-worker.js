@@ -6,9 +6,27 @@ workbox.setConfig({
 workbox.core.skipWaiting();
 workbox.core.clientsClaim();
 workbox.precaching.precacheAndRoute([]);
-self.addEventListener('push', (event) => {
-    const title = event.data.text();
-    event.waitUntil(self.registration.showNotification(title, {
+function sendPostMessage(client, message) {
+    client.postMessage(message);
+}
+function openNotificationHandler(client, notificationId) {
+    sendPostMessage(client, {
+        type: 'open-notification',
+        payload: { notificationId }
+    });
+    sendPostMessage(client, {
+        type: 'drink-dose'
+    });
+}
+function closeNotificationHandler(client, notificationId) {
+    sendPostMessage(client, {
+        type: 'close-notification',
+        payload: { notificationId }
+    });
+}
+self.addEventListener('push', event => {
+    const { message, notificationId } = event.data.json();
+    event.waitUntil(self.registration.showNotification(message, {
         actions: [
             {
                 action: 'Drink',
@@ -19,26 +37,33 @@ self.addEventListener('push', (event) => {
         vibrate: [100, 50, 100],
         badge: 'assets/images/icon-192x192.png',
         icon: 'assets/images/icon-192x192.png',
+        data: { notificationId }
     }));
 });
-function sendDrinkMessage(client) {
-    client.postMessage({
-        type: 'drink-dose'
-    });
-}
+self.addEventListener('notificationclose', event => {
+    event.waitUntil(self.clients.matchAll({ type: 'window' }).then(clientList => {
+        const activeClient = clientList.find(client => 'focus' in client);
+        const { notificationId } = event.notification.data;
+        if (activeClient) {
+            closeNotificationHandler(activeClient, notificationId);
+            return;
+        }
+    }));
+});
 self.addEventListener('notificationclick', event => {
     event.notification.close();
-    event.waitUntil(self.clients.matchAll({ type: 'window' })
-        .then(clientList => {
+    event.waitUntil(self.clients.matchAll({ type: 'window' }).then(clientList => {
         const activeClient = clientList.find(client => 'focus' in client);
+        const { notificationId } = event.notification.data;
         if (activeClient) {
             activeClient.focus();
-            sendDrinkMessage(activeClient);
+            openNotificationHandler(activeClient, notificationId);
             return;
         }
         if (self.clients.openWindow) {
-            self.clients.openWindow('/').then(sendDrinkMessage);
-            return;
+            self.clients
+                .openWindow('/')
+                .then(client => openNotificationHandler(client, notificationId));
         }
     }));
 });

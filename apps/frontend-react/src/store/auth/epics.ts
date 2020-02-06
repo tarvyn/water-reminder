@@ -8,10 +8,11 @@ import {
   authActions
 } from '@react-client/store/auth/actions';
 import { ErrorResponse } from '@water-reminder/api-interfaces';
+import { getTimeZone } from '@water-reminder/utils';
 import { combineEpics, Epic } from 'redux-observable';
 import { EMPTY, from, of } from 'rxjs';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
-import { actualizePushSubscription } from '../../service-worker/push-notifications';
+import { actualizePushSubscription } from '../../service-worker/client/push-subscriptions';
 
 const ofType = exposeOfTypeOperator<Actions>();
 
@@ -84,7 +85,7 @@ export const actualizePushSubscriptionEpic: Epic = action$ =>
     )
   );
 
-export const actualizeUserUtcOffsetEpic: Epic = action$ =>
+export const actualizeUserTimeZoneEpic: Epic = action$ =>
   action$.pipe(
     filter(action =>
       [ActionType.LoginSuccess, ActionType.GetUserSuccess].includes(action.type)
@@ -92,10 +93,10 @@ export const actualizeUserUtcOffsetEpic: Epic = action$ =>
     switchMap(() =>
       from(
         userApiConnector.updateUser({
-          utcOffset: new Date().getTimezoneOffset() / 60,
+          timeZone: getTimeZone(),
           // TODO: implement ui
           awakeTime: 9.5,
-          sleepTime: 23
+          sleepTime: 23.5
         })
       ).pipe(
         // TODO: fix;
@@ -111,5 +112,5 @@ export const epics = combineEpics(
   getUserEpic,
   logoutEpic,
   actualizePushSubscriptionEpic,
-  actualizeUserUtcOffsetEpic
+  actualizeUserTimeZoneEpic
 );

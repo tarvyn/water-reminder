@@ -1,6 +1,7 @@
 import { AppBar, Avatar, Button, createStyles, makeStyles, Theme, Toolbar, Typography } from '@material-ui/core';
 import { authActions } from '@react-client/store/auth/actions';
 import { RootState } from '@react-client/store/reducer';
+import CustomizedMenus from '@react-client/ui/root/menu/menu';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -12,10 +13,10 @@ export interface NavBarProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(2)
     },
     title: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     button: {
       color: theme.palette.text.hint
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.secondary.main,
       marginLeft: theme.spacing(1)
     }
-  }),
+  })
 );
 
 const NavBar = ({ auth }: NavBarProps) => {
@@ -54,10 +55,12 @@ const NavBar = ({ auth }: NavBarProps) => {
               src={auth.user.imageUrl}
             />}
             {!auth.user.imageUrl &&
-            <Avatar alt={auth.user.firstName}
-              className={classes.avatar}>
-              {avatarPlaceholder}
-            </Avatar>}
+            <CustomizedMenus>
+              <Avatar alt={auth.user.firstName}
+                className={classes.avatar}>
+                {avatarPlaceholder}
+              </Avatar>
+            </CustomizedMenus>}
           </>
         }
         {
