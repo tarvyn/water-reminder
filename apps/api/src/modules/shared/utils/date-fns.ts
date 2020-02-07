@@ -4,10 +4,6 @@ export function getMillisecondsInHour(): number {
   return 1000 * 60 * 60;
 }
 
-export function getNow(): Date {
-  return new Date();
-}
-
 export function startOfHalfOfHour(time: Date): Date {
   return differenceInMinutes(endOfHour(time), time) > 30
     ? startOfHour(time)

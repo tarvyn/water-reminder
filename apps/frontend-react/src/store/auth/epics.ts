@@ -7,6 +7,7 @@ import {
   ActionType,
   authActions
 } from '@react-client/store/auth/actions';
+import { settingsActions } from '@react-client/store/settings/actions';
 import { ErrorResponse } from '@water-reminder/api-interfaces';
 import { getTimeZone } from '@water-reminder/utils';
 import { combineEpics, Epic } from 'redux-observable';
@@ -35,7 +36,10 @@ export const login: Epic = action$ =>
     ofType(ActionType.Login),
     switchMap(({ payload: { loginData } }) =>
       authApiConnector.login(loginData).pipe(
-        map(user => authActions.loginSuccess(user)),
+        switchMap(user => [
+          authActions.loginSuccess(user),
+          settingsActions.getSettingsSuccess(user)
+        ]),
         tap(() => history.push('/')),
         catchError((error: ErrorResponse) =>
           of(authActions.loginError(error.message))
@@ -61,7 +65,10 @@ export const getUserEpic: Epic = action$ =>
     ofType(ActionType.GetUser),
     switchMap(() =>
       userApiConnector.getUser().pipe(
-        map(user => authActions.getUserSuccess(user)),
+        switchMap(user => [
+          authActions.getUserSuccess(user),
+          settingsActions.getSettingsSuccess(user)
+        ]),
         catchError(error => {
           history.push('/sign-in');
 

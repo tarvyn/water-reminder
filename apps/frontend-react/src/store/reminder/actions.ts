@@ -2,7 +2,7 @@ import { ExtractActionsType } from '@react-client/shared/types/redux';
 import { NextDrinkTimeDto } from '@water-reminder/api-interfaces';
 
 export enum ActionType {
-  CalculateNextDrinkTimeSuccess = '[reminder] Calculate next drink time success'
+  CalculateNextDrinkTimeSuccess = '[Reminder] Calculate next drink time success'
 }
 
 export const reminderActions = {

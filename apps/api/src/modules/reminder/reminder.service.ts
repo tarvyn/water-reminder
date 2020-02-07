@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { getNow } from '@water-reminder/utils';
 import {
   addDays,
   differenceInMilliseconds,
@@ -11,7 +12,6 @@ import { HydrationService } from '../hydration/hydration.service';
 import { NotificationService } from '../notification/notification.service';
 import {
   endOfHalfOfHour, getMillisecondsInHour,
-  getNow,
   startOfHalfOfHour
 } from '../shared/utils/date-fns';
 import { UserService } from '../user/user.service';

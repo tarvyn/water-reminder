@@ -4,18 +4,18 @@ import { SignUpFormData } from '@react-client/ui/auth/sign-up/sign-up-form/sign-
 import { UserDto } from '@water-reminder/api-interfaces';
 
 export enum ActionType {
-  Login = '[auth] Login',
-  LoginSuccess = '[auth] Login success',
-  LoginError = '[auth] Login error',
-  Logout = '[auth] Logout',
-  LogoutSuccess = '[auth] Logout success',
-  LogoutError = '[auth] Logout error',
-  SignUp = '[auth] Sign up',
-  SignUpSuccess = '[auth] Sign up success',
-  SignUpError = '[auth] Sign up error',
-  GetUser = '[auth] Get user',
-  GetUserSuccess = '[auth] Get user success',
-  GetUserError = '[auth] Get user error',
+  Login = '[Auth] Login',
+  LoginSuccess = '[Auth] Login success',
+  LoginError = '[Auth] Login error',
+  Logout = '[Auth] Logout',
+  LogoutSuccess = '[Auth] Logout success',
+  LogoutError = '[Auth] Logout error',
+  SignUp = '[Auth] Sign up',
+  SignUpSuccess = '[Auth] Sign up success',
+  SignUpError = '[Auth] Sign up error',
+  GetUser = '[Auth] Get user',
+  GetUserSuccess = '[Auth] Get user success',
+  GetUserError = '[Auth] Get user error',
 }
 
 export const authActions = {

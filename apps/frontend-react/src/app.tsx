@@ -7,45 +7,28 @@ import NavBar from '@react-client/ui/root/nav-bar/nav-bar';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 export const App = () => {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      dispatch(authActions.getUser());
-    },
-    []
-  );
+  useEffect(() => {
+    dispatch(authActions.getUser());
+  }, []);
 
   return (
-    <div className='app'>
-      <NavBar auth={auth} />
-      <main className='app__main'>
-        <Route
-          path='/'
-          exact
-          render={() => (
-            <Doses/>
-          )}
-        />
-        <Route
-          path='/sign-in'
-          exact
-          render={() => (
-            <SignIn/>
-          )}
-        />
-        <Route
-          path='/sign-up'
-          exact
-          render={() => (
-            <SignUp/>
-          )}
-        />
-      </main>
-    </div>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <div className='app'>
+        <NavBar auth={auth} />
+        <main className='app__main'>
+          <Route path='/' exact render={() => <Doses />} />
+          <Route path='/sign-in' exact render={() => <SignIn />} />
+          <Route path='/sign-up' exact render={() => <SignUp />} />
+        </main>
+      </div>
+    </MuiPickersUtilsProvider>
   );
 };
 

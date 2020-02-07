@@ -17,3 +17,7 @@ export async function catchPromiseError<T>(
 export function getTimeZone(): string {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
+
+export function getNow(): Date {
+  return new Date();
+}

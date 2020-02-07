@@ -3,15 +3,15 @@ import { DoseViewModel } from '@react-client/shared/types/hydration';
 import { DoseDto } from '@water-reminder/api-interfaces';
 
 export enum ActionType {
-  GetDoses = '[hydration] get doses',
-  GetDosesSuccess = '[hydration] get doses success',
-  GetDosesError = '[hydration] get doses error',
-  CreateDose = '[hydration] create dose',
-  CreateDoseSuccess = '[hydration] create dose success',
-  CreateDoseError = '[hydration] create dose error',
-  DeleteDose = '[hydration] delete dose',
-  DeleteDoseSuccess = '[hydration] delete dose success',
-  DeleteDoseError = '[hydration] delete dose error',
+  GetDoses = '[Hydration] get doses',
+  GetDosesSuccess = '[Hydration] get doses success',
+  GetDosesError = '[Hydration] get doses error',
+  CreateDose = '[Hydration] create dose',
+  CreateDoseSuccess = '[Hydration] create dose success',
+  CreateDoseError = '[Hydration] create dose error',
+  DeleteDose = '[Hydration] delete dose',
+  DeleteDoseSuccess = '[Hydration] delete dose success',
+  DeleteDoseError = '[Hydration] delete dose error',
 }
 
 export const hydrationActions = {

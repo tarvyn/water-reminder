@@ -1,5 +1,5 @@
 import { DoseVolume, UserDto } from '@water-reminder/api-interfaces';
-import { getTimeZone } from '@water-reminder/utils';
+import { getNow, getTimeZone } from '@water-reminder/utils';
 import {
   addMilliseconds,
   addMinutes,
@@ -11,7 +11,6 @@ import {
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import {
   getMillisecondsInHour,
-  getNow,
   startOfHalfOfHour
 } from '../shared/utils/date-fns';
 
