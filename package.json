@@ -54,6 +54,7 @@
     "@nestjs/mongoose": "^6.1.2",
     "@nestjs/passport": "^6.1.0",
     "@nestjs/platform-express": "^6.8.3",
+    "@nivo/bar": "^0.61.1",
     "@nrwl/angular": "8.7.1",
     "@types/cookie-parser": "^1.4.2",
     "@types/jsonwebtoken": "^8.3.5",

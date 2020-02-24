@@ -53,7 +53,7 @@ const NavBar = ({ auth }: NavBarProps) => {
   const avatarPlaceholder = `${firstNameLetter}${lastNameLetter}`.toUpperCase();
 
   return (
-    <AppBar position='sticky'>
+    <AppBar position='static'>
       <Toolbar>
         <Typography variant='subtitle1' className={classes.title}>
           Water Reminder App

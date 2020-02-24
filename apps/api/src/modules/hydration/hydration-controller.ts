@@ -1,12 +1,9 @@
-import { AuthGuard } from '../auth/auth.guard';
-import { JWTPayload } from '../auth/auth.model';
-import { ConfigService } from '../config/config.service';
 import {
   Body,
   ConflictException,
   Controller,
-  Delete, forwardRef,
-  Get, Inject,
+  Delete,
+  Get,
   InternalServerErrorException,
   Param,
   Post,
@@ -14,21 +11,23 @@ import {
   Req,
   UseGuards
 } from '@nestjs/common';
-import { DoseDto } from '@water-reminder/api-interfaces';
+import { DailyHydrationStatisticsDto, DoseDto } from '@water-reminder/api-interfaces';
 import { catchPromiseError } from '@water-reminder/utils';
 import { Request } from 'express';
 import { decode } from 'jsonwebtoken';
-import { ReminderService } from '../reminder/reminder.service';
-import { TimeRange } from './time-range.model';
+import { AuthGuard } from '../auth/auth.guard';
+import { JWTPayload } from '../auth/auth.model';
+import { ConfigService } from '../config/config.service';
 import { CreateDoseData } from './dose.model';
 import { HydrationService } from './hydration.service';
+import { TimeRange } from './time-range.model';
 
 @Controller('hydration')
 @UseGuards(AuthGuard)
 export class HydrationController {
   constructor(
     private config: ConfigService,
-    private hydrationService: HydrationService,
+    private hydrationService: HydrationService
   ) {}
 
   @Get('doses')
@@ -49,6 +48,24 @@ export class HydrationController {
     return doses;
   }
 
+  @Get('statistics')
+  async getStatistics(
+    @Req() req: Request,
+    @Query() timeRange: TimeRange
+  ): Promise<Array<DailyHydrationStatisticsDto>> {
+    const { jwt } = req.cookies;
+    const { id } = decode(jwt) as JWTPayload;
+    const [error, statistics] = await catchPromiseError(
+      this.hydrationService.getStatistics(id, timeRange)
+    );
+
+    if (error) {
+      throw new ConflictException();
+    }
+
+    return statistics;
+  }
+
   @Post('doses')
   async createDose(
     @Req() req: Request,
@@ -64,7 +81,6 @@ export class HydrationController {
       throw new InternalServerErrorException();
     }
 
-    // this.reminderService.calculateNextDrinkTime()
     return dose;
   }
 

@@ -1,7 +1,12 @@
 import { API_PREFIX } from '@react-client/shared/constants/api-prefix';
 import { parseResponse } from '@react-client/shared/rxjs-operators/parse-response';
-import { CreateDoseDto, DoseDto } from '@water-reminder/api-interfaces';
-import { startOfDay } from 'date-fns';
+import {
+  CreateDoseDto,
+  DailyHydrationStatisticsDto,
+  DoseDto
+} from '@water-reminder/api-interfaces';
+import { getNow } from '@water-reminder/utils';
+import { startOfDay, startOfMonth, endOfMonth } from 'date-fns';
 import { Observable } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { first, map } from 'rxjs/operators';
@@ -16,6 +21,18 @@ class HydrationApiConnector {
 
     return fromFetch(`${this.url}/doses?${params}`).pipe(
       parseResponse<Array<DoseDto>>(),
+      first()
+    );
+  }
+
+  getHydrationStatistics(): Observable<Array<DailyHydrationStatisticsDto>> {
+    const params = new URLSearchParams({
+      from: startOfMonth(getNow()).toISOString(),
+      to: endOfMonth(getNow()).toISOString()
+    });
+
+    return fromFetch(`${this.url}/statistics?${params}`).pipe(
+      parseResponse<Array<DailyHydrationStatisticsDto>>(),
       first()
     );
   }

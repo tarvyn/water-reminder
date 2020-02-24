@@ -23,6 +23,11 @@ export interface UserDto extends BaseEntity {
   readonly timeZone: string;
 }
 
+export interface DailyHydrationStatisticsDto {
+  readonly date: Date | string;
+  readonly amount: number;
+}
+
 export type UserLoginDto = Pick<UserDto, 'email' | 'password'>;
 
 export type UserSignUpDto = Pick<

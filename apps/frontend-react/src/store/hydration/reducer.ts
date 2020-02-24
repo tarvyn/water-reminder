@@ -2,10 +2,7 @@ import { Actions, ActionType } from '@react-client/store/hydration/actions';
 import { isEqual } from 'date-fns';
 import { initialState, State } from './state';
 
-export function reducer(
-  state: State = initialState,
-  action: Actions
-): State {
+export function reducer(state: State = initialState, action: Actions): State {
   switch (action.type) {
     case ActionType.GetDoses:
       return {
@@ -17,14 +14,21 @@ export function reducer(
         ...state,
         doses: action.payload.doses
       };
+    case ActionType.GetHydrationStatisticsSuccess:
+      return {
+        ...state,
+        monthlyStatistics: action.payload.monthlyStatistics
+      };
     case ActionType.CreateDose:
       return {
         ...state,
-        doses: (state.doses || []).concat([{
-          ...action.payload,
-          userId: action.payload.userId,
-          _id: Math.random().toString()
-        }])
+        doses: (state.doses || []).concat([
+          {
+            ...action.payload,
+            userId: action.payload.userId,
+            _id: Math.random().toString()
+          }
+        ])
       };
     case ActionType.CreateDoseSuccess:
       return {
@@ -42,9 +46,7 @@ export function reducer(
     case ActionType.DeleteDose:
       return {
         ...state,
-        doses: state.doses.filter(
-          dose => dose._id !== action.payload.id
-        )
+        doses: state.doses.filter(dose => dose._id !== action.payload.id)
       };
     default:
       return state;

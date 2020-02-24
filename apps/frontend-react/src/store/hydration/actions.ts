@@ -1,6 +1,6 @@
 import { ExtractActionsType } from '@react-client/shared/types/redux';
 import { DoseViewModel } from '@react-client/shared/types/hydration';
-import { DoseDto } from '@water-reminder/api-interfaces';
+import { DailyHydrationStatisticsDto, DoseDto } from '@water-reminder/api-interfaces';
 
 export enum ActionType {
   GetDoses = '[Hydration] get doses',
@@ -12,12 +12,15 @@ export enum ActionType {
   DeleteDose = '[Hydration] delete dose',
   DeleteDoseSuccess = '[Hydration] delete dose success',
   DeleteDoseError = '[Hydration] delete dose error',
+  GetHydrationStatistics = '[Hydration] delete hydration statistics',
+  GetHydrationStatisticsSuccess = '[Hydration] delete hydration statistics success',
+  GetHydrationStatisticsError = '[Hydration] delete hydration statistics error'
 }
 
 export const hydrationActions = {
   getDoses: () => {
     return {
-      type: ActionType.GetDoses,
+      type: ActionType.GetDoses
     } as const;
   },
   getDosesSuccess: (doses: Array<DoseViewModel>) => {
@@ -29,6 +32,25 @@ export const hydrationActions = {
   getDosesError: (errorMessage: string) => {
     return {
       type: ActionType.GetDosesError,
+      payload: { errorMessage }
+    } as const;
+  },
+  getHydrationStatistics: () => {
+    return {
+      type: ActionType.GetHydrationStatistics
+    } as const;
+  },
+  getHydrationStatisticsSuccess: (
+    monthlyStatistics: Array<DailyHydrationStatisticsDto>
+  ) => {
+    return {
+      type: ActionType.GetHydrationStatisticsSuccess,
+      payload: { monthlyStatistics }
+    } as const;
+  },
+  getHydrationStatisticsError: (errorMessage: string) => {
+    return {
+      type: ActionType.GetHydrationStatisticsError,
       payload: { errorMessage }
     } as const;
   },
@@ -67,7 +89,7 @@ export const hydrationActions = {
       type: ActionType.DeleteDoseError,
       payload: { errorMessage }
     } as const;
-  },
+  }
 };
 
 export type Actions = ExtractActionsType<typeof hydrationActions>;

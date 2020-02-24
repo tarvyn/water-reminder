@@ -21,6 +21,13 @@ export function getZonedToUtcTime(hours: number, timeZone: string): Date {
   return zonedTimeToUtc(addMinutes(startOfDay(getNow()), hours * 60), timeZone);
 }
 
+export function getUtcToZonedTime(date: Date, timeZone: string): Date {
+  return zonedTimeToUtc(
+    utcToZonedTime(date, timeZone),
+    getTimeZone()
+  );
+}
+
 export function calculateRemainingHours(
   user: UserDto,
   now: Date = getNow()

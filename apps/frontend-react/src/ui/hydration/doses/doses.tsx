@@ -58,6 +58,7 @@ const Doses = () => {
 
   useEffect(() => {
     dispatch(hydrationActions.getDoses());
+    dispatch(hydrationActions.getHydrationStatistics());
   }, []);
 
   return (
