@@ -4,11 +4,10 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import { ReminderService } from './modules/reminder/reminder.service';
-require('newrelic');
 
 async function bootstrap(): Promise<void> {
   const globalPrefix = 'api';
-  const port = process.env.PORT || environment.apiPort;
+  const port = process.env.apiPort || environment.apiPort;
   const app = await NestFactory.create(AppModule, { cors: true });
   const reminderService = app.get(ReminderService);
 

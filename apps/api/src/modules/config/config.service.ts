@@ -17,7 +17,7 @@ type EnvironmentKey =
 
 @Injectable()
 export class ConfigService {
-  private readonly envConfig: Record<EnvironmentKey, string>;
+  public readonly envConfig: Record<EnvironmentKey, string>;
 
   constructor() {
     const filePath = `${rootPath}/apps/api/development.env`;

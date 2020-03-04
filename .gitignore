@@ -40,3 +40,4 @@ Thumbs.db
 
 # Environment Files
 /apps/api/development.env
+production.env
