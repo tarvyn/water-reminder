@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
-RUN npm install --production
+# RUN npm install --production
 
 EXPOSE 9000
 
