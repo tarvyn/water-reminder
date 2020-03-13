@@ -131,7 +131,7 @@ module.exports = require("mongoose");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfigService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24);
+/* harmony import */ var _api_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
 /* harmony import */ var _shared_utils_root_path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(38);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_3__);
@@ -868,7 +868,6 @@ ReminderService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 
 const paths = path__WEBPACK_IMPORTED_MODULE_3__["resolve"](__dirname);
-console.log(paths);
 let ConfigModule = class ConfigModule {
 };
 ConfigModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -883,23 +882,12 @@ ConfigModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 /* 24 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
-const environment = {
-    production: true
-};
-
-
-/***/ }),
-/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = require("@nestjs/passport");
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -978,7 +966,7 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1013,7 +1001,7 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1035,6 +1023,17 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(class_validator__WEBPACK_IMPORTED_MODULE_1__["IsDateString"])(),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
 ], TimeRange.prototype, "to", void 0);
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+const environment = {
+    production: true
+};
 
 
 /***/ }),
@@ -1272,7 +1271,6 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
                 imports: [_config_config_module__WEBPACK_IMPORTED_MODULE_1__[/* ConfigModule */ "a"]],
                 useFactory: (configService) => {
                     console.log('mongoConnectionString', configService.get('mongodbConnectionString'));
-                    console.log('env', configService.envConfig);
                     return {
                         uri: configService.get('mongodbConnectionString'),
                         useNewUrlParser: true,
@@ -1362,7 +1360,7 @@ AuthModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /* harmony import */ var jsonwebtoken__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(11);
 /* harmony import */ var jsonwebtoken__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jsonwebtoken__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _auth_auth_guard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13);
-/* harmony import */ var _user_model__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(26);
+/* harmony import */ var _user_model__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(25);
 /* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(8);
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 
@@ -1563,7 +1561,7 @@ const UserSchemaModel = {
 /* harmony import */ var _config_config_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _nestjs_passport__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(25);
+/* harmony import */ var _nestjs_passport__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(24);
 /* harmony import */ var _nestjs_passport__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_nestjs_passport__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _water_reminder_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3);
 /* harmony import */ var passport_google_oauth20__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(46);
@@ -1625,7 +1623,7 @@ module.exports = require("passport-google-oauth20");
 /* harmony import */ var _config_config_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _nestjs_passport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(25);
+/* harmony import */ var _nestjs_passport__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24);
 /* harmony import */ var _nestjs_passport__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_nestjs_passport__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _water_reminder_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3);
 /* harmony import */ var bcryptjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(30);
@@ -1633,7 +1631,7 @@ module.exports = require("passport-google-oauth20");
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7);
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _user_user_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8);
-/* harmony import */ var _auth_validate_model__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(27);
+/* harmony import */ var _auth_validate_model__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(26);
 /* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(21);
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 
@@ -1809,7 +1807,7 @@ const DoseSchemaModel = {
 /* harmony import */ var _config_config_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5);
 /* harmony import */ var _dose_model__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(33);
 /* harmony import */ var _hydration_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(15);
-/* harmony import */ var _time_range_model__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(28);
+/* harmony import */ var _time_range_model__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(27);
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 
 
@@ -2126,7 +2124,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _modules_app_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(37);
-/* harmony import */ var _api_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24);
+/* harmony import */ var _api_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(28);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _nestjs_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(55);
@@ -2145,9 +2143,6 @@ function bootstrap() {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
         const globalPrefix = 'api';
         const port = process.env.apiPort || _api_environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"].apiPort;
-        console.log('!!! port !!!', port);
-        console.log('!!! environment !!!', _api_environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"]);
-        console.log('!!! process.env !!!', process.env);
         const app = yield _nestjs_core__WEBPACK_IMPORTED_MODULE_4__["NestFactory"].create(_modules_app_module__WEBPACK_IMPORTED_MODULE_1__[/* AppModule */ "a"], { cors: true });
         const reminderService = app.get(_modules_reminder_reminder_service__WEBPACK_IMPORTED_MODULE_6__[/* ReminderService */ "a"]);
         reminderService.runReminder();

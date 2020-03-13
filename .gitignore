@@ -40,3 +40,8 @@ Thumbs.db
 # Environment Files
 /apps/api/development.env
 production.env
+
+# tls files
+*.crt
+*.key
+*.pem

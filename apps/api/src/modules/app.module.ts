@@ -23,8 +23,6 @@ import { UserModule } from './user/user.module';
           configService.get('mongodbConnectionString')
         );
 
-        console.log('env', configService.envConfig);
-
         return {
           uri: configService.get('mongodbConnectionString'),
           useNewUrlParser: true,
