@@ -40,7 +40,9 @@
     "clear-api-containers": "docker stop api0 && docker rm api0 && docker stop api1 && docker rm api1",
     "clear-web-image": "docker rmi water-reminder_web --force",
     "clear-api-image": "docker rmi water-reminder_api0 && docker rmi water-reminder_api1",
-    "clear-docker": "npm run clear-web-container && npm run clear-web-image && npm run clear-api-containers && npm run clear-api-image",
+    "clear-docker": "npm run clear-docker:web && npm run clear-docker:api",
+    "clear-docker:web": "npm run clear-web-container && npm run clear-web-image",
+    "clear-docker:api": "npm run clear-api-containers && npm run clear-api-image",
     "serve-prod": "npm run build && docker-compose up"
   },
   "private": true,
