@@ -1,0 +1,47 @@
+version: "3"
+
+networks:
+  corp:
+    driver: bridge
+
+services:
+  api0:
+    container_name: api0
+    env_file:
+      - production.env
+    environment:
+      - RUN_REMINDER=true
+    networks:
+      - corp
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    ports:
+      - "9001:9000"
+  api1:
+    container_name: api1
+    env_file:
+      - production.env
+    networks:
+      - corp
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    ports:
+      - "9002:9000"
+  web:
+    container_name: web
+    networks:
+      - corp
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    volumes:
+      - ./dist:/usr/share/nginx/html/dist
+      - ./dist:/var/www/html/dist
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./fullchain.pem:/etc/nginx/fullchain.pem
+      - ./privkey.pem:/etc/nginx/privkey.pem
+    ports:
+      - "80:80"
+      - "443:443"

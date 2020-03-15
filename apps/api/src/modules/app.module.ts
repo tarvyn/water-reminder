@@ -22,8 +22,8 @@ import { UserModule } from './user/user.module';
         useNewUrlParser: true,
         useUnifiedTopology: true
       }),
-      inject: [ConfigService],
+      inject: [ConfigService]
     })
-  ],
+  ]
 })
 export class AppModule {}
