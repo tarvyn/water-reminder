@@ -13,7 +13,7 @@
     "build:service-worker:dev": "tsc -b apps/frontend-react/tsconfig.worker.dev.json",
     "build:service-worker": "tsc -b apps/frontend-react/tsconfig.worker.json",
     "build:workbox": "workbox injectManifest apps/frontend-react/src/workbox-config.js",
-    "build:frontend-react": "ng build frontend-react --prod && npm run build:service-worker && npm run build:workbox",
+    "build:frontend-react": "node --max_old_space_size=512 ./node_modules/.bin/ng build frontend-react --prod && npm run build:service-worker && npm run build:workbox",
     "build:api": "ng build api --prod",
     "build": "npm run build:api && npm run build:frontend-react && npm run gzip",
     "gzip": "gzip -r ./dist/apps/frontend-react/*.js",
