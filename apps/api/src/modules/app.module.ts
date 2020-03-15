@@ -17,18 +17,11 @@ import { UserModule } from './user/user.module';
     UserModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService): MongooseModuleOptions => {
-        console.log(
-          'mongoConnectionString',
-          configService.get('mongodbConnectionString')
-        );
-
-        return {
-          uri: configService.get('mongodbConnectionString'),
-          useNewUrlParser: true,
-          useUnifiedTopology: true
-        };
-      },
+      useFactory: (configService: ConfigService): MongooseModuleOptions => ({
+        uri: configService.get('mongodbConnectionString'),
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      }),
       inject: [ConfigService]
     })
   ]
