@@ -9,6 +9,8 @@ services:
     container_name: api0
     env_file:
       - production.env
+    environment:
+      - RUN_REMINDER=true
     networks:
       - corp
     build:

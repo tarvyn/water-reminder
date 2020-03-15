@@ -2145,7 +2145,9 @@ function bootstrap() {
         const port = process.env.apiPort || _api_environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"].apiPort;
         const app = yield _nestjs_core__WEBPACK_IMPORTED_MODULE_4__["NestFactory"].create(_modules_app_module__WEBPACK_IMPORTED_MODULE_1__[/* AppModule */ "a"], { cors: true });
         const reminderService = app.get(_modules_reminder_reminder_service__WEBPACK_IMPORTED_MODULE_6__[/* ReminderService */ "a"]);
-        reminderService.runReminder();
+        if (process.env.RUN_REMINDER) {
+            reminderService.runReminder();
+        }
         app.use(cookie_parser__WEBPACK_IMPORTED_MODULE_5__());
         app.useGlobalPipes(new _nestjs_common__WEBPACK_IMPORTED_MODULE_3__["ValidationPipe"]());
         app.setGlobalPrefix(globalPrefix);

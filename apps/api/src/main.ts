@@ -11,7 +11,10 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, { cors: true });
   const reminderService = app.get(ReminderService);
 
-  reminderService.runReminder();
+  if (process.env.RUN_REMINDER || !environment.production) {
+    reminderService.runReminder();
+  }
+
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix(globalPrefix);
