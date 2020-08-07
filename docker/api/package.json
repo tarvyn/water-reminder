@@ -25,6 +25,6 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.3",
     "passport": "^0.4.0",
-    "class-transformer": "^0.2.3"
+    "class-transformer": "^0.3.1"
   }
 }
