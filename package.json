@@ -72,7 +72,7 @@
     "@types/react-redux": "^7.1.5",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
-    "class-validator": "^0.11.0",
+    "class-validator": "^0.14.0",
     "cookie-parser": "^1.4.4",
     "core-js": "^3.4.1",
     "date-fns": "^2.8.1",
